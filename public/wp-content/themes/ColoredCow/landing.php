@@ -8,13 +8,18 @@
 ?>
 
 
-<?php $args = array( 'post_type' => 'guest', 'posts_per_page' => 10 );
+<?php $args = array( 'post_type' => 'guest', 'posts_per_page' => 5 );
 $loop = new WP_Query( $args );
 while ( $loop->have_posts() ) : $loop->the_post();
   the_title();
-  echo '<div class="entry-content">';
-  the_content();
-  echo '</div>';
+  //echo '<div class="entry-content">';
+  // the_content();
+  echo "<br>";
+  the_field('phone');
+  echo "<br>";
+  the_field('Email');
+  echo "<br>";
+  //echo '</div>';
 endwhile;
 ?>
 
