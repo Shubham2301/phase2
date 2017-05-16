@@ -18,7 +18,18 @@ acf_form_head(); ?>
 				<?php //the_content(); ?>
 				
 				<?php  
-					acf_form();
+					acf_form(array(
+						'post_id' 	      => 'new_post',
+						'post_title'      => true,
+						'post_content'    => true,
+						'form'			  => true,
+						'new_post' 	      => array(
+								'post_type'   => 'guest',
+								'post_status' => 'publish'
+						),
+						'submit_value'	  => 'Create a new guest'	
+					));	
+					//acf_form();
 				?>
 
 			<?php endwhile; ?>
