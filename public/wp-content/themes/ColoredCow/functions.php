@@ -22,4 +22,21 @@ if ( ! function_exists( 'cc_styles' ) ) {
 //add filter to remove margin above html
 add_filter('show_admin_bar','__return_false');
 
-?>
+function add_subscriber()
+{
+    $post_title = $_POST['title'];
+    //$post_title = 'vaibhav';
+    //echo $_POST['title'];
+    $my_post = array(
+      'post_title'    => $post_title,
+      'post_status'   => 'publish',
+      'post_type'     => 'guest'
+     );
+    
+ 
+// Insert the post into the database
+wp_insert_post( $my_post );
+}
+
+add_action('wp_ajax_add_subscriber', 'add_subscriber');
+add_action('wp_ajax_nopriv_add_subscriber', 'add_subscriber');
