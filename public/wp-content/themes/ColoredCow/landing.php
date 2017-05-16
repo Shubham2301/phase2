@@ -4,27 +4,26 @@
  * Template Name: Landing
  */
 
-    get_header();
-?>
+acf_form_head(); ?>
+<?php get_header(); ?>	
 
-<?php $args = array( 'post_type' => 'guest', 'posts_per_page' => 5 );
- 
-$loop = new WP_Query( $args );
-while ( $loop->have_posts() ) : $loop->the_post();
-  the_title();
-  //echo '<div class="entry-content">';
-  // the_content();
-  echo "<br>";
-  the_field('phone');
-  echo "<br>";
-  the_field('email');
-  echo "<br>";
-  //echo '</div>';
+	<div id="primary">
+		<div id="content" role="main">
 
-endwhile;
+			<?php /* The loop */ ?>
+			<?php while ( have_posts() ) : the_post(); ?>
+				
+				<h1><?php  the_title(); ?></h1>
+				
+				<?php //the_content(); ?>
+				
+				<?php  
+					acf_form();
+				?>
 
-?>
+			<?php endwhile; ?>
 
-<?php 
-    get_footer(); 
-?>
+		</div>
+	</div>
+
+<?php get_footer(); ?>
