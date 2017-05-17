@@ -24,18 +24,27 @@ add_filter('show_admin_bar','__return_false');
 
 function add_subscriber()
 {
-    $post_title = $_POST['title'];
+    $post_title = $_POST['name'];
+    $post_phone = $_POST['phone'];
+    $post_email = $_POST['email'];
     //$post_title = 'vaibhav';
     //echo $_POST['title'];
     $my_post = array(
       'post_title'    => $post_title,
+      'post_phone'    => $post_phone,
       'post_status'   => 'publish',
       'post_type'     => 'guest'
      );
     
  
 // Insert the post into the database
-wp_insert_post( $my_post );
+    $post_id = wp_insert_post( $my_post );
+    if('$post_id')
+    {
+        add_post_meta($post_id, 'phone', $post_phone);
+        add_post_meta($post_id, 'email', $post_email);
+    }
+
 }
 
 add_action('wp_ajax_add_subscriber', 'add_subscriber');
