@@ -11,15 +11,15 @@
 		<div>
 			<input type="hidden" value="add_subscriber" name="action" />
 			<label for="name">name</label><br />
-			<input type="text" id="name" size="20" name="name" />
+			<input type="text" id="name" size="20" name="name" required />
 		</div>
 		<div>
 			<label for="phone">Phone No.</label><br />
-			<input type="number" id="phone" size="10" name="phone" />
+			<input type="number" id="phone" size="10" name="phone" required />
 		</div>
 		<div>
 			<label for="email">Email</label><br />
-			<input type="email" id="email" size="40" name="email" />
+			<input type="email" id="email" size="40" name="email" required />
 		</div>
 		<br>	
 		<div>
