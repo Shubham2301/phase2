@@ -53,7 +53,7 @@ function verify_field()
     global $wpdb;
     $tablename = $wpdb->prefix."soiree";
     $post_verify_email = sanitize_email($_POST['guest_email']);
-    $datum = $wpdb->get_results("SELECT * FROM 23_sjpostmeta WHERE meta_value = '".'s@j.com'."'");
+    $datum = $wpdb->get_results("SELECT * FROM 23_sjpostmeta WHERE meta_value = '".'$_POST['guest_email']'."'");
     if($datum>0)
     {
         echo "email matched";
@@ -62,6 +62,5 @@ function verify_field()
     {
         echo "Email not found";
     }
-    return true;
     //return json_encode($datum);
 }    
