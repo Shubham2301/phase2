@@ -1,25 +1,2 @@
-/*! ColoredCow 2017-05-10 */
-jQuery(document).ready(function() {
-    console.log("in main.js");
-    console.log(PARAMS.ajaxurl);
-    jQuery('#save_id').on('click', function() {
-        var add_subscriber_form = jQuery('#add_subscriber_form');
-        if (!add_subscriber_form[0].checkValidity()) {
-            add_subscriber_form[0].reportValidity();
-            return;
-        }
-        console.log('clicked');
-        console.log(jQuery('#add_subscriber_form').serialize());
-        // return;
-        jQuery.ajax({
-            type: "POST",
-            url: PARAMS.ajaxurl,
-            data: add_subscriber_form.serialize(),
-            success: function(response) {
-                //var data = response.data;
-                console.log("ajax request successful");
-
-            }
-        });
-    });
-});
+/*! ColoredCow 2017-05-19 */
+function RSVP(){console.log("click verify");var a=jQuery("#guest_email"),b=jQuery("#guest_email").val(),c="email1 "+b;a[0].checkValidity()||a[0].reportValidity(),console.log(c),jQuery.ajax({type:"POST",url:PARAMS.ajaxurl,data:c,success:function(a){console.log(a),console.log("verifying with database")}})}jQuery(document).ready(function(){console.log("in main.js"),console.log(PARAMS.ajaxurl),jQuery("#submit_field").on("click",function(){console.log("submit field clicked"),RSVP()})});

@@ -22,30 +22,46 @@ if ( ! function_exists( 'cc_styles' ) ) {
 //add filter to remove margin above html
 add_filter('show_admin_bar','__return_false');
 
-function add_subscriber()
-{
-    $post_title = $_POST['name'];
-    $post_phone = $_POST['phone'];
-    $post_email = $_POST['email'];
-    //$post_title = 'vaibhav';
-    //echo $_POST['title'];
-    $my_post = array(
-      'post_title'    => $post_title,
-      'post_phone'    => $post_phone,
-      'post_status'   => 'publish',
-      'post_type'     => 'guest'
-     );
+// function add_subscriber()
+// {
+//     $post_title = $_POST['name'];
+//     $post_phone = $_POST['phone'];
+//     $post_email = $_POST['email'];
+//     $my_post = array(
+//       'post_title'    => $post_title,
+//       'post_phone'    => $post_phone,
+//       'post_status'   => 'publish',
+//       'post_type'     => 'guest'
+//      );
     
  
-// Insert the post into the database
-    $post_id = wp_insert_post( $my_post );
-    if('$post_id')
+// // Insert the post into the database
+//     $post_id = wp_insert_post( $my_post );
+//     if('$post_id')
+//     {
+//         add_post_meta($post_id, 'phone', $post_phone);
+//         add_post_meta($post_id, 'email', $post_email);
+//     }
+
+// }
+
+// add_action('wp_ajax_add_subscriber', 'add_subscriber');
+// add_action('wp_ajax_nopriv_add_subscriber', 'add_subscriber');
+
+function verify_field()
+{
+    global $wpdb;
+    $tablename = $wpdb->prefix."soiree";
+    $post_verify_email = sanitize_email($_POST['guest_email']);
+    $datum = $wpdb->get_results("SELECT * FROM 23_sjpostmeta WHERE meta_value = '".'s@j.com'."'");
+    if($datum>0)
     {
-        add_post_meta($post_id, 'phone', $post_phone);
-        add_post_meta($post_id, 'email', $post_email);
+        echo "email matched";
     }
-
-}
-
-add_action('wp_ajax_add_subscriber', 'add_subscriber');
-add_action('wp_ajax_nopriv_add_subscriber', 'add_subscriber');
+    else
+    {
+        echo "Email not found";
+    }
+    return true;
+    //return json_encode($datum);
+}    

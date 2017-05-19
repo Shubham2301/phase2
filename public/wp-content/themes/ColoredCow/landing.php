@@ -30,7 +30,7 @@
 		echo '<div class="button">';
 			echo'<a href=" http://public.dev/rsvp/" target="_blank">Click Here to RSVP for this Event</a>';
 		echo '</div>';
-	endwhile;
+	endwhile;	
 ?>
 
 <?php get_footer(); ?>
