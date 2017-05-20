@@ -2,10 +2,6 @@
 
 jQuery(document).ready(function() {
     console.log("in main.js");
-    console.log(PARAMS.ajaxurl);
-    // jQuery('#save_id').on('click', function() {
-    //     addSubscriber();
-    // });
 
     jQuery('#submit_field').on('click', function() {
         console.log("submit field clicked");
@@ -15,45 +11,34 @@ jQuery(document).ready(function() {
 });
 
 
-// function addSubscriber() {
-//     var add_subscriber_form = jQuery('#add_subscriber_form');
-//     if (!add_subscriber_form[0].checkValidity()) {
-//         add_subscriber_form[0].reportValidity();
-//         return;
-//     }
-//     console.log('clicked');
-//     console.log(jQuery('#add_subscriber_form').serialize());
-//     // return;
-//     jQuery.ajax({
-//         type: "POST",
-//         url: PARAMS.ajaxurl,
-//         data: add_subscriber_form.serialize(),
-//         success: function(response) {
-//             //var data = response.data;
-//             console.log("ajax request successful");
-
-//         }
-//     });
-// }
-
 
 function RSVP() {
     console.log("click verify");
-    var guest_email = jQuery('#guest_email');
-    var value = jQuery("#guest_email").val();
-    var dataString = 'email1 ' + value;
-    if (!guest_email[0].checkValidity()) {
-        guest_email[0].reportValidity();
+    var verification_form = jQuery('#verification_form');
+    var email1 = jQuery("#guest_email").val();
+    console.log(email1);
+    //var dataString = verification_form.serialize();
+    if (!verification_form[0].checkValidity()) {
+        verification_form[0].reportValidity();
+        return;
     }
-    console.log(dataString);
+    var dataString = {
+        'action': 'verify_field',
+        'value': email1
+    }
+    console.log(PARAMS.ajaxurl);
+    //console.log(dataString);
     jQuery.ajax({
         type: "POST",
         url: PARAMS.ajaxurl,
         data: dataString,
         success: function(response) {
-            console.log(response);
-            console.log("verifying with database");
+            if (response.match(/success/gi)) {
+                window.alert("your response has been accepted");
+            } else {
+                window.alert("sorry no entry found with this credentials");
+            }
         }
     });
-    return;
+
 }
