@@ -38,6 +38,7 @@ function verify_field2()
     else
     {
         wp_die(json_encode("failed"));
+        
     }    
     wp_die();
 } 
