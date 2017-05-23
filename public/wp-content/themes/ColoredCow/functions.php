@@ -27,12 +27,13 @@ function add_subscriber()
     $post_title = $_POST['name'];
     $post_phone = $_POST['phone'];
     $post_email = $_POST['email'];
+    $post_password= $_POST['password'];
     $post_gender= $_POST['gender'];
+    $hash = wp_hash_password( $post_password );
     if(check_duplicate_entry($post_phone,$post_email)==true)
         {
         $my_post = array(
           'post_title'    => $post_title,
-          //'post_phone'    => $post_phone,
           'post_status'   => 'publish',
           'post_type'     => 'guest'
          ); 
@@ -42,6 +43,7 @@ function add_subscriber()
         {
             add_post_meta($post_id, 'phone', $post_phone);
             add_post_meta($post_id, 'email', $post_email);
+            add_post_meta($post_id, 'password', $hash);
             //add_post_meta($post_id, 'gender', $post_gender);
         }
         wp_die(1);

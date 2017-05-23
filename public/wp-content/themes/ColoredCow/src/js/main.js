@@ -44,17 +44,16 @@ function RSVP() {
     var verification_form = jQuery('#verification_form');
     var email1 = jQuery("#guest_email").val();
     console.log(email1);
-    //var dataString = verification_form.serialize();
+    var dataString = verification_form.serialize();
     if (!verification_form[0].checkValidity()) {
         verification_form[0].reportValidity();
         return;
     }
-    var dataString = {
-        'action': 'verify_field',
-        'value': email1
-    }
+    // var dataString = {
+    //     'action': 'verify_field',
+    //     'value': email1
+    // }
     console.log(PARAMS.ajaxurl);
-    //console.log(dataString);
     jQuery.ajax({
         type: "POST",
         url: PARAMS.ajaxurl,

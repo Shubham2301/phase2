@@ -25,6 +25,10 @@
 			<input type="email" id="email" size="40" name="email" required />
 		</div>
 		<div>
+			<label for="password">Password</label>
+				<br />
+				<input type="password" id="password" name="password" required />
+		<div>
 			<label for="gender">Gender</label>	
 			</br>
 			<select>
