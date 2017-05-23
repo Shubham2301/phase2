@@ -23,14 +23,17 @@ function addSubscriber() {
     }
     console.log('clicked');
     console.log(jQuery('#add_subscriber_form').serialize());
-    // return;
     jQuery.ajax({
         type: "POST",
         url: PARAMS.ajaxurl,
         data: add_subscriber_form.serialize(),
         success: function(response) {
-            //var data = response.data;
-            console.log("ajax request successful");
+            console.log(response);
+            if (response == 1) {
+                window.alert("Congratulations!!! you have successfully registered for this event");
+            } else if (response == 0) {
+                window.alert("ERROR! these credentials are already registered");
+            }
 
         }
     });
