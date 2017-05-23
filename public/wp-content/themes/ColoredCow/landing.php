@@ -27,8 +27,11 @@
 			echo '<span class="last_date">Last Registration Date:</span>';
 			the_field('last_date');
 		echo "</div>";	
-		echo '<div class="button">';
+		echo '<div class="link">';
 			echo'<a href=" http://public.dev/rsvp/" target="_blank">Click Here to RSVP for this Event</a>';
+		echo '</div>';
+		echo '<div class="link">';
+			echo'<a href=" http://public.dev/register/" target="_blank">Click Here to Register for this Event</a>';
 		echo '</div>';
 	endwhile;	
 ?>

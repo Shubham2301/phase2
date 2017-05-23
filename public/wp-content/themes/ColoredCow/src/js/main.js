@@ -3,6 +3,10 @@
 jQuery(document).ready(function() {
     console.log("in main.js");
 
+    jQuery('#save_id').on('click', function() {
+        addSubscriber();
+    });
+
     jQuery('#submit_field').on('click', function() {
         console.log("submit field clicked");
         RSVP();
@@ -11,6 +15,26 @@ jQuery(document).ready(function() {
 });
 
 
+function addSubscriber() {
+    var add_subscriber_form = jQuery('#add_subscriber_form');
+    if (!add_subscriber_form[0].checkValidity()) {
+        add_subscriber_form[0].reportValidity();
+        return;
+    }
+    console.log('clicked');
+    console.log(jQuery('#add_subscriber_form').serialize());
+    // return;
+    jQuery.ajax({
+        type: "POST",
+        url: PARAMS.ajaxurl,
+        data: add_subscriber_form.serialize(),
+        success: function(response) {
+            //var data = response.data;
+            console.log("ajax request successful");
+
+        }
+    });
+}
 
 function RSVP() {
     console.log("click verify");
