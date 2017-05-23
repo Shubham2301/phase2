@@ -61,15 +61,17 @@ add_action('wp_ajax_nopriv_add_subscriber', 'add_subscriber');
 function verify_field2()
 {
     global $wpdb;
-    $datum = $wpdb->get_results("SELECT * FROM 23_sjpostmeta WHERE meta_value = '".$_POST['value']."'");
-    if($datum)
-    {
+    $password = $_POST['password'];
+    $postID = $wpdb->get_var("SELECT post_id FROM 23_sjpostmeta WHERE meta_value = '".$_POST['guest_email']."'");
+    $hash=$wpdb->get_var("SELECT meta_value FROM 23_sjpostmeta WHERE post_id = '".$postID."'AND meta_key = 'password'");
+    if( wp_check_password( $password, $hash))
+    {    
         wp_die(json_encode("success"));
     }
+
     else
     {
         wp_die(json_encode("failed"));
-
     }    
     wp_die();
 } 
