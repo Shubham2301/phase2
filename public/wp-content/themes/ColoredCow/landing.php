@@ -9,27 +9,29 @@
 	$args = array( 'post_type' => 'Soiree', 'posts_per_page' => 1 );
 	$loop = new WP_Query( $args );
 	while ( $loop->have_posts() ) : $loop->the_post();
-		echo '<div class="soiree_name">';
-			echo '<h1>';
+?>	
+		<div class="soiree_name">
+			<h1>
 				the_title(); 
-			echo '</h1>';
-		echo '</div>';
-		echo '<div class="entry-content">';
-			echo '<h3>';
+			</h1>
+		</div>
+		<div class="entry-content">
+			<h3>
 				the_content();
-			echo '</h3>';	
-		echo '</div>';
-		echo '<div class="soiree_date">';
-			echo '<span class="event_date">Soiree Date:</span>';
+			</h3>	
+		</div>
+		<div class="soiree_date">
+			<span class="event_date">Soiree Date:</span>
 			the_field('event_date');
-		echo "</div>";		
-		echo '<div class="soiree_date">';
-			echo '<span class="last_date">Last Registration Date:</span>';
+		</div>		
+		<div class="soiree_date">
+			<span class="last_date">Last Registration Date:</span>
 			the_field('last_date');
-		echo "</div>";	
-		echo '<div class="button">';
-			echo'<a href=" http://public.dev/rsvp/" target="_blank">Click Here to RSVP for this Event</a>';
-		echo '</div>';
+		</div>";	
+		<div class="button">
+			<a href=" http://public.dev/rsvp/" target="_blank">Click Here to RSVP for this Event</a>
+		</div>
+<?php		
 	endwhile;
 ?>
 
