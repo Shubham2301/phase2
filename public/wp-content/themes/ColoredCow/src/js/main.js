@@ -1,23 +1,16 @@
 /*! ColoredCow 2017-05-10 */
 
 jQuery(document).ready(function() {
-    console.log("in main.js");
-
     jQuery('#submit_field').on('click', function() {
-        console.log("submit field clicked");
         RSVP();
     });
-
 });
-
-
 
 function RSVP() {
     console.log("click verify");
     var verification_form = jQuery('#verification_form');
     var email1 = jQuery("#guest_email").val();
     console.log(email1);
-    //var dataString = verification_form.serialize();
     if (!verification_form[0].checkValidity()) {
         verification_form[0].reportValidity();
         return;
@@ -26,8 +19,6 @@ function RSVP() {
         'action': 'verify_field',
         'value': email1
     }
-    console.log(PARAMS.ajaxurl);
-    //console.log(dataString);
     jQuery.ajax({
         type: "POST",
         url: PARAMS.ajaxurl,
@@ -40,5 +31,4 @@ function RSVP() {
             }
         }
     });
-
 }

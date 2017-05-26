@@ -19,30 +19,25 @@ if ( ! function_exists( 'cc_styles' ) ) {
     add_action('wp_enqueue_scripts','cc_styles');
 }
 
-//add filter to remove margin above html
 add_filter('show_admin_bar','__return_false');
 
 
-function verify_field2()
+function verify_credentials()
 {
-    //echo $_POST['value'];
     global $wpdb;
-    $tablename = $wpdb->prefix."soiree";
-    $post_verify_email = sanitize_email($_POST['value']);
-    //echo $post_verify_email;
-    $datum = $wpdb->get_results("SELECT * FROM 23_sjpostmeta WHERE meta_value = '".$_POST['value']."'");
-    if($datum)
+    $tablename = $wpdb->prefix."postmeta";
+    $post_verify_email = ($_POST['value']);
+    $credential = $wpdb->get_results("SELECT * FROM $tablename WHERE meta_value = '".$_POST['value']."'");
+    if($credential)
     {
-        wp_die(json_encode("success"));
+        wp_send_json_success("success");
     }
     else
-    {
-        wp_die(json_encode("failed"));
-        
+    {   
+        wp_send_json_error("failed");
     }    
-    wp_die();
 } 
-add_action('wp_ajax_verify_field','verify_field2'); 
-add_action('wp_ajax_nopriv_verify_field','verify_field2');   
+add_action('wp_ajax_verify_credentials','verify_credentials'); 
+add_action('wp_ajax_nopriv_verify_credentials','verify_credentials');   
 
 ?>
