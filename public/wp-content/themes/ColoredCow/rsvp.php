@@ -1,6 +1,6 @@
 <?php
 /**
- * Template Name: Rsvp
+ * Template Name: RSVP
  */
 ?>
 <?php get_header() ?>
@@ -9,7 +9,7 @@
 	<div>
 		 <form id="verification_form">
 			 <div>
-				 <input type="hidden" value="verify_field" name="action"/>
+				 <input type="hidden" value="verify_credentials" name="action"/>
 			 </div>
 			 </br>
 			 <div>

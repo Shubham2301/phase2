@@ -19,7 +19,6 @@ if ( ! function_exists( 'cc_styles' ) ) {
     add_action('wp_enqueue_scripts','cc_styles');
 }
 
-//add filter to remove margin above html
 add_filter('show_admin_bar','__return_false');
 
 function add_subscriber()
@@ -37,7 +36,6 @@ function add_subscriber()
           'post_status'   => 'publish',
           'post_type'     => 'guest'
          ); 
-        // Insert the post into the database
         $post_id = wp_insert_post( $my_post );
         if('$post_id')
         {
@@ -58,30 +56,30 @@ add_action('wp_ajax_add_subscriber', 'add_subscriber');
 add_action('wp_ajax_nopriv_add_subscriber', 'add_subscriber');
 
 
-function verify_field2()
+function verify_credentials()
 {
     global $wpdb;
+    $tablename = $wpdb->prefix("postmeta");
     $password = $_POST['password'];
-    $postID = $wpdb->get_var("SELECT post_id FROM 23_sjpostmeta WHERE meta_value = '".$_POST['guest_email']."'");
-    $hash=$wpdb->get_var("SELECT meta_value FROM 23_sjpostmeta WHERE post_id = '".$postID."'AND meta_key = 'password'");
+    $postID = $wpdb->get_var("SELECT post_id FROM '".$tablename."' WHERE meta_value = '".$_POST['guest_email']."'");
+    $hash=$wpdb->get_var("SELECT meta_value FROM '".$tablename."' WHERE post_id = '".$postID."'AND meta_key = 'password'");
     if( wp_check_password( $password, $hash))
     {    
-        wp_die(json_encode("success"));
+        wp_send_jon_success("success");
     }
 
     else
     {
-        wp_die(json_encode("failed"));
+        wp_send_json_error("failed");
     }    
-    wp_die();
 } 
-add_action('wp_ajax_verify_field','verify_field2'); 
-add_action('wp_ajax_nopriv_verify_field','verify_field2');   
+add_action('wp_ajax_verify_credentials','verify_credentials'); 
+add_action('wp_ajax_nopriv_verify_credentials','verify_credentials');   
 
 function check_duplicate_entry($phone,$email)
 {
     global $wpdb;
-    $rowcount = $wpdb->get_var("SELECT COUNT(*) FROM 23_sjpostmeta WHERE meta_value = '".$phone."'OR meta_value = '".$email."'");
+    $rowcount = $wpdb->get_var("SELECT COUNT(*) FROM '".$tablename."' WHERE meta_value = '".$phone."'OR meta_value = '".$email."'");
     if($rowcount>=1)
     {
         return false;
