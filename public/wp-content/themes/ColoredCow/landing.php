@@ -25,9 +25,13 @@
 			<h4><?php echo get_field('last_date'); ?></h4>
 		</div>	
 		<div class="button">
-			<a href=" http://public.dev/rsvp/" target="_blank">Click Here to RSVP for this Event</a>
+			<?php
+				$page=get_page_by_title( "RSVP"); 
+				$link=get_page_link($page->ID); 
+			?>
+			<a href="<?php echo $link ?>" target="_blank">Click Here to RSVP for this Event</a>
 		</div>
-		
+
 <?php endwhile;	 ?>
 
 <?php get_footer(); ?>
