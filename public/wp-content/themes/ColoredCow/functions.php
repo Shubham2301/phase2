@@ -58,30 +58,36 @@ add_action('wp_ajax_nopriv_add_subscriber', 'add_subscriber');
 
 function verify_credentials()
 {
-    echo "inside functions";
     global $wpdb;
     $tablename = $wpdb->prefix.'postmeta';
     $password = $_POST['password'];
-    $postID = $wpdb->get_var("SELECT post_id FROM '".$tablename."' WHERE meta_value = '".$_POST['guest_email']."'");
-    $hash=$wpdb->get_var("SELECT meta_value FROM '".$tablename."' WHERE post_id = '".$postID."'AND meta_key = 'password'");
-    if( wp_check_password( $password, $hash))
-    {   
-        $wpdb->update(
-            $tablename,
-            array(
-                'meta_value'=>'confirmed'
-            ),
-            array(
-                'post_id'=>$postID,
-                'meta_key'=>'status'
-                )
-            ); 
-        wp_die("success");
-    }
-
-    else
+    $postID = $wpdb->get_var("SELECT post_id FROM $tablename WHERE meta_value = '".$_POST['guest_email']."'");
+    $status=$wpdb->get_var("SELECT meta_value FROM $tablename WHERE post_id = '".$postID."'AND meta_key = 'status'");
+    $hash=$wpdb->get_var("SELECT meta_value FROM $tablename WHERE post_id = '".$postID."'AND meta_key = 'password'");
+    if ($status=='confirmed') 
     {
-       wp_die("failed");
+        wp_die("duplicate");
+    }   
+    else
+        {
+        if( wp_check_password( $password, $hash))
+        {   
+            $wpdb->update(
+                $tablename,
+                array(
+                    'meta_value'=>'confirmed'
+                ),
+                array(
+                    'post_id'=>$postID,
+                    'meta_key'=>'status'
+                    )
+                ); 
+            wp_die("success");
+        }
+        else
+        {
+           wp_die("failed");
+        }
     }    
 } 
 add_action('wp_ajax_verify_credentials','verify_credentials'); 
@@ -90,9 +96,8 @@ add_action('wp_ajax_nopriv_verify_credentials','verify_credentials');
 function check_duplicate_entry($phone,$email)
 {
     global $wpdb;
-    global $tablename;
-    echo $tablename;
-    $rowcount = $wpdb->get_var("SELECT COUNT(*) FROM 23_sjpostmeta WHERE meta_value = '".$phone."'OR meta_value = '".$email."'");
+    $tablename = $wpdb->prefix.'postmeta';
+    $rowcount = $wpdb->get_var("SELECT COUNT(*) FROM $tablename WHERE meta_value = '".$phone."'OR meta_value = '".$email."'");
     if($rowcount>=1)
     {
         return false;
@@ -102,7 +107,6 @@ function check_duplicate_entry($phone,$email)
         return true;
     }
     wp_die();
-
 }
 
 ?>
