@@ -5,27 +5,30 @@
 ?>
 
 <?php get_header(); ?>
-
-<div id="postbox">
-	<form id="add_subscriber_form" >
-		<div>
-			<input type="hidden" value="add_subscriber" name="action" />
-			<label for="name">name</label><br />
-			<input type="text" id="name" size="20" name="name" required />
+<?php
+	$args = array( 'post_type' => 'Soiree', 'posts_per_page' => 1 );
+	$loop = new WP_Query( $args );
+	while ( $loop->have_posts() ) : $loop->the_post();
+?>	
+		<div class="soiree_name">
+			<h1><?php echo get_the_title();?></h1>
 		</div>
-		<div>
-			<label for="phone">Phone No.</label><br />
-			<input type="number" id="phone" size="10" name="phone" required />
+		<div class="entry-content">
+			<h3><?php echo get_the_content();?></h3>	
 		</div>
-		<div>
-			<label for="email">Email</label><br />
-			<input type="email" id="email" size="40" name="email" required />
-		</div>
-		<br>	
-		<div>
-			<button type="button" name="save" id="save_id" class="btn">Submit</button>
+		<div class="soiree_date">
+			<h4><span class="event_date">Soiree Date:</span></h4>
+			<h4><?php echo get_field('event_date'); ?></h4>
 		</div>		
-	</form>
-</div>
+		<div class="soiree_date">
+			<h4><span class="last_date">Last Registration Date:</span></h4>
+			<h4><?php echo get_field('last_date'); ?></h4>
+		</div>	
+		<div class="button">
+			<a href=" http://public.dev/rsvp/" target="_blank">Click Here to RSVP for this Event</a>
+		</div>
+<?php		
+	endwhile;
+?>
 
 <?php get_footer(); ?>
