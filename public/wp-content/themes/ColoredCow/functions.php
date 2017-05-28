@@ -42,7 +42,7 @@ function add_subscriber()
             add_post_meta($post_id, 'email', $post_email);
             add_post_meta($post_id, 'password', $hash);
             add_post_meta($post_id, 'status', 'pending');
-            //add_post_meta($post_id, 'gender', $post_gender);
+            add_post_meta($post_id, 'gender', $post_gender);
         }
         wp_die(1);
     }

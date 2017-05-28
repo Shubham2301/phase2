@@ -39,12 +39,8 @@
 					<div>
 						<label for="gender">Gender</label>	
 						</br>
-						<select>
-							<option value="Male">M</option>
-							<option value="Female">F</option>
-						</select>
-						<!-- <input type="radio" name="gender" value="Male" id="Male">Male
-						<input type="radio" name="gender" value="Female" id="Female">Female -->
+						<input type="radio" name="gender" value="Male" id="Male">Male
+						<input type="radio" name="gender" value="Female" id="Female">Female
 					</div>	
 					<div>
 						<button type="button" name="save" id="save_id" class="btn btn-success">Submit</button>
