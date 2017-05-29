@@ -34,7 +34,7 @@ function verify_credentials()
     }
     else
     {   
-        wp_die("failed");
+        wp_send_json_error("failed");
     }    
 } 
 add_action('wp_ajax_verify_credentials','verify_credentials'); 
