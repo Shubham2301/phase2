@@ -30,11 +30,11 @@ function verify_credentials()
     $credential = $wpdb->get_results("SELECT * FROM $tablename WHERE meta_value = '".$_POST['value']."'");
     if($credential)
     {
-        wp_send_json_success("success");
+        wp_die("success");
     }
     else
     {   
-        wp_send_json_error("failed");
+        wp_die("failed");
     }    
 } 
 add_action('wp_ajax_verify_credentials','verify_credentials'); 
