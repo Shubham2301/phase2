@@ -26,8 +26,7 @@ function verify_credentials()
 {
     global $wpdb;
     $tablename = $wpdb->prefix."postmeta";
-    $post_verify_email = ($_POST['value']);
-    $credential = $wpdb->get_results("SELECT * FROM $tablename WHERE meta_value = '".$_POST['value']."'");
+    $credential = $wpdb->get_results("SELECT * FROM $tablename WHERE meta_value = '".$_POST['guest_email1']."'");
     if($credential)
     {
         wp_die("success");
