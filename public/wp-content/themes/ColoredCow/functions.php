@@ -73,7 +73,7 @@ add_action('wp_ajax_nopriv_verify_credentials','verify_credentials');
 function check_duplicate_entry($phone,$email)
 {
     global $wpdb;
-    $rowcount = $wpdb->get_var("SELECT COUNT(*) FROM '".$tablename."' WHERE meta_value = '".$phone."'OR meta_value = '".$email."'");
+    $rowcount = $wpdb->get_var("SELECT COUNT(*) FROM $tablename WHERE meta_value = '".$phone."'OR meta_value = '".$email."'");
     if($rowcount>=1)
     {
         return false;
