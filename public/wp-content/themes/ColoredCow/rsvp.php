@@ -5,7 +5,6 @@
 ?>
 <?php get_header(); ?>
 
-	<div>
 		<form id="verification_form">
 			<div>
 				<input type="hidden" value="verify_credentials" name="action"/>
@@ -20,7 +19,6 @@
 			<div>
 				<button type="button" id="submit_field" name="submit_here" class="btn btn-success">Click</button>
 			</div>
-		</form>	
-	</div>	 
+		</form>	 
 	
 <?php get_footer(); ?>

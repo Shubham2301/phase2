@@ -27,16 +27,16 @@
 		<div class="link">
 			<?php
 				$page=get_page_by_title( "RSVP"); 
-				$link1=get_page_link($page->ID); 
+				$link_rsvp=get_page_link($page->ID); 
 			?>
-			<a href="<?php echo $link1; ?>" target="_blank">Click Here to RSVP for this Event</a>
+			<a href="<?php echo $link_rsvp; ?>" target="_blank">Click Here to RSVP for this Event</a>
 		</div>
 		<div class="link">
 			<?php
 				$page=get_page_by_title( "Register Guest"); 
-				$link2=get_page_link($page->ID); 
+				$link_register_page=get_page_link($page->ID); 
 			?>
-			<a href="<?php echo $link2; ?>" target="_blank">Click Here to Register for this Event</a>
+			<a href="<?php echo $link_register_page; ?>" target="_blank">Click Here to Register for this Event</a>
 		</div>
 	<?php endwhile; ?>	
 

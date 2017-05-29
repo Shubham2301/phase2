@@ -39,13 +39,13 @@ function add_subscriber()
         {
             add_post_meta($post_id, 'phone', $post_phone);
             add_post_meta($post_id, 'email', $post_email);
-            //add_post_meta($post_id, 'gender', $post_gender);
+            add_post_meta($post_id, 'gender', $post_gender);
         }
-        wp_die(1);
+        wp_die(true);
     }
     else
     {
-        wp_die(0);
+        wp_die(false);
     }
 }
 
@@ -75,7 +75,7 @@ function check_duplicate_entry($phone,$email)
     global $wpdb;
     $tablename = $wpdb->prefix."postmeta";
     $rowcount = $wpdb->get_var("SELECT COUNT(*) FROM $tablename WHERE meta_value = '".$phone."'OR meta_value = '".$email."'");
-    if($rowcount>=1)
+    if($rowcount)
     {
         return false;
     }
