@@ -26,10 +26,6 @@
 		<div>
 			<label for="gender">GENDER</label>	
 			</br>
-			<select>
-				<option value="male">MALE</option>
-				<option value="female">FEMALE</option>
-			</select>
 			<input type="radio" name="gender" value="Male" id="Male">Male
 			<input type="radio" name="gender" value="Female" id="Female">Female 
 		</div>	

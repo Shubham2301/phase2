@@ -1,5 +1,3 @@
-/*! ColoredCow 2017-05-10 */
-
 jQuery(document).ready(function() {
     jQuery('#save_id').on('click', function() {
         addSubscriber();
@@ -20,9 +18,9 @@ function addSubscriber() {
         url: PARAMS.ajaxurl,
         data: add_subscriber_form.serialize(),
         success: function(response) {
-            if (response == 1) {
+            if (response) {
                 window.alert("Congratulations!!! you have successfully registered for this event");
-            } else if (response == 0) {
+            } else {
                 window.alert("ERROR! these credentials are already registered");
             }
         }
