@@ -26,8 +26,8 @@
 		<div>
 			<label for="gender">GENDER</label>	
 			</br>
-			<input type="radio" name="gender" value="Male" id="Male">Male
-			<input type="radio" name="gender" value="Female" id="Female">Female 
+			<input type="radio" name="gender" value="male" id="Male">Male
+			<input type="radio" name="gender" value="female" id="Female">Female 
 		</div>	
 		<div>
 			<button type="button" name="save" id="save_id" class="btn btn-success">Submit</button>
