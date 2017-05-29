@@ -31,7 +31,6 @@ function add_subscriber()
         {
         $my_post = array(
           'post_title'    => $post_title,
-          //'post_phone'    => $post_phone,
           'post_status'   => 'publish',
           'post_type'     => 'guest'
          ); 
@@ -58,15 +57,14 @@ function verify_credentials()
 {
     global $wpdb;
     $tablename = $wpdb->prefix."postmeta";
-    $credential = $wpdb->get_results("SELECT * FROM '".$tablename."' WHERE meta_value = '".$_POST['value']."'");
+    $credential = $wpdb->get_results("SELECT * FROM $tablename WHERE meta_value = '".$_POST['guest_email1']."'");
     if($credential)
     {
-        wp_send_json_success("success");
+        wp_die("success");
     }
     else
-    {
-        wp_send_json_error("failed");
-
+    {   
+        wp_die("failed");
     }    
 } 
 add_action('wp_ajax_verify_credentials','verify_credentials'); 
@@ -85,5 +83,4 @@ function check_duplicate_entry($phone,$email)
         return true;
     }
 }
-
 ?>

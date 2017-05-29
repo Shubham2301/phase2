@@ -5,11 +5,9 @@ jQuery(document).ready(function() {
         addSubscriber();
     });
     jQuery('#submit_field').on('click', function() {
-        console.log("submit field clicked");
         RSVP();
     });
 });
-
 
 function addSubscriber() {
     var add_subscriber_form = jQuery('#add_subscriber_form');
@@ -17,7 +15,6 @@ function addSubscriber() {
         add_subscriber_form[0].reportValidity();
         return;
     }
-    console.log(jQuery('#add_subscriber_form').serialize());
     jQuery.ajax({
         type: "POST",
         url: PARAMS.ajaxurl,
@@ -39,7 +36,6 @@ function RSVP() {
         verification_form[0].reportValidity();
         return;
     }
-    console.log(PARAMS.ajaxurl);
     jQuery.ajax({
         type: "POST",
         url: PARAMS.ajaxurl,

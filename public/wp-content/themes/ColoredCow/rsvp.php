@@ -1,6 +1,6 @@
 <?php
 /**
- * Template Name: Rsvp
+ * Template Name: RSVP
  */
 ?>
 <?php get_header(); ?>
@@ -23,5 +23,4 @@
 		</form>	
 	</div>	 
 	
-
 <?php get_footer(); ?>

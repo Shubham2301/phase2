@@ -25,12 +25,22 @@
 			<h4><?php echo get_field('last_date'); ?></h4>
 		</div>	
 		<div class="link">
-			<a href=" http://public.dev/rsvp/" target="_blank">Click Here to RSVP for this Event</a>
+			<?php
+				$page=get_page_by_title( "RSVP"); 
+				$link1=get_page_link($page->ID); 
+			?>
+			<a href="<?php echo $link1; ?>" target="_blank">Click Here to RSVP for this Event</a>
 		</div>
 		<div class="link">
-			<a href=" http://public.dev/register/" target="_blank">Click Here to Register for this Event</a>
+			<?php
+				$page=get_page_by_title( "Register Guest"); 
+				$link2=get_page_link($page->ID); 
+			?>
+			<a href="<?php echo $link2; ?>" target="_blank">Click Here to Register for this Event</a>
 		</div>
 	<?php endwhile; ?>	
 
+
+		
 
 <?php get_footer(); ?>
