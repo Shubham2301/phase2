@@ -3,7 +3,7 @@
 if ( ! function_exists( 'cc_scripts' ) ) {
     function cc_scripts() {
         wp_enqueue_script('cc-bootstrap', get_template_directory_uri().'/dist/lib/js/bootstrap.min.js', array('jquery'), '1.0.0', true);
-        wp_enqueue_script('main', get_template_directory_uri().'/main.js', array('jquery', 'cc-bootstrap'), '1.0.0', true);
+        wp_enqueue_script('main', get_template_directory_uri().'/main.js', array('jquery', 'cc-bootstrap'), '1.1.0', true);
         wp_localize_script( 'main', 'PARAMS', array('ajaxurl' => admin_url('admin-ajax.php')) );
 
     }
@@ -19,33 +19,24 @@ if ( ! function_exists( 'cc_styles' ) ) {
     add_action('wp_enqueue_scripts','cc_styles');
 }
 
-//add filter to remove margin above html
 add_filter('show_admin_bar','__return_false');
 
-function add_subscriber()
+
+function verify_credentials()
 {
-    $post_title = $_POST['name'];
-    $post_phone = $_POST['phone'];
-    $post_email = $_POST['email'];
-    //$post_title = 'vaibhav';
-    //echo $_POST['title'];
-    $my_post = array(
-      'post_title'    => $post_title,
-      'post_phone'    => $post_phone,
-      'post_status'   => 'publish',
-      'post_type'     => 'guest'
-     );
-    
- 
-// Insert the post into the database
-    $post_id = wp_insert_post( $my_post );
-    if('$post_id')
+    global $wpdb;
+    $tablename = $wpdb->prefix."postmeta";
+    $credential = $wpdb->get_results("SELECT * FROM $tablename WHERE meta_value = '".$_POST['guest_email1']."'");
+    if($credential)
     {
-        add_post_meta($post_id, 'phone', $post_phone);
-        add_post_meta($post_id, 'email', $post_email);
+        wp_die("success");
     }
+    else
+    {   
+        wp_die("failed");
+    }    
+} 
+add_action('wp_ajax_verify_credentials','verify_credentials'); 
+add_action('wp_ajax_nopriv_verify_credentials','verify_credentials');   
 
-}
-
-add_action('wp_ajax_add_subscriber', 'add_subscriber');
-add_action('wp_ajax_nopriv_add_subscriber', 'add_subscriber');
+?>

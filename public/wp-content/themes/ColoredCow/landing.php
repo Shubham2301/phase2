@@ -6,7 +6,7 @@
 
 <?php get_header(); ?>
 <?php
-	$args = array( 'post_type' => 'Soiree', 'posts_per_page' => 1 );
+	$args = array( 'post_type' => 'soiree', 'posts_per_page' => 1 );
 	$loop = new WP_Query( $args );
 	while ( $loop->have_posts() ) : $loop->the_post();
 ?>	
@@ -25,10 +25,13 @@
 			<h4><?php echo get_field('last_date'); ?></h4>
 		</div>	
 		<div class="button">
-			<a href=" http://public.dev/rsvp/" target="_blank">Click Here to RSVP for this Event</a>
+			<?php
+				$page=get_page_by_title( "RSVP"); 
+				$link=get_page_link($page->ID); 
+			?>
+			<a href="<?php echo $link ?>" target="_blank">Click Here to RSVP for this Event</a>
 		</div>
-<?php		
-	endwhile;
-?>
+
+<?php endwhile;	 ?>
 
 <?php get_footer(); ?>
