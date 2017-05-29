@@ -9,15 +9,14 @@ jQuery(document).ready(function() {
 function RSVP() {
     console.log("click verify");
     var verification_form = jQuery('#verification_form');
+    var dataString = verification_form.serialize();
+    console.log("dataString= " + dataString);
     var email1 = jQuery("#guest_email").val();
     console.log(email1);
+
     if (!verification_form[0].checkValidity()) {
         verification_form[0].reportValidity();
         return;
-    }
-    var dataString = {
-        'action': 'verify_field',
-        'value': email1
     }
     jQuery.ajax({
         type: "POST",
