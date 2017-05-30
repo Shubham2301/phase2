@@ -39,11 +39,16 @@ function RSVP() {
         url: PARAMS.ajaxurl,
         data: dataString,
         success: function(response) {
-            if (response.match(/success/gi)) {
+            if (response.success) {
                 window.alert("your response has been accepted");
+            } else if (response.data == "duplicate") {
+                window.alert("your have already registered your response");
             } else {
-                window.alert("sorry no entry found with this credentials");
+                window.alert("sorry !!! credential mis-match or you are not registered in our list");
             }
+        },
+        error: function() {
+            window.alert("some error occured!! contact the administrator");
         }
     });
 }

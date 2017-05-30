@@ -38,6 +38,7 @@ function add_subscriber(){
             add_post_meta($post_id, 'phone', $post_phone);
             add_post_meta($post_id, 'email', $post_email);
             add_post_meta($post_id, 'password', $hash);
+            add_post_meta($post_id, 'status', 'pending');
             add_post_meta($post_id, 'gender', $post_gender);
         }
         wp_send_json_success();
@@ -51,15 +52,34 @@ add_action('wp_ajax_add_subscriber', 'add_subscriber');
 add_action('wp_ajax_nopriv_add_subscriber', 'add_subscriber');
 
 
+
 function verify_credentials(){
     global $wpdb;
-    $tablename = $wpdb->prefix."postmeta";
-    $credential = $wpdb->get_results("SELECT * FROM $tablename WHERE meta_value = '".$_POST['guest_email']."'");
-    if($credential){
-        wp_die("success");
-    }
-    else{   
-        wp_die("failed");
+    $tablename = $wpdb->prefix.'postmeta';
+    $password = $_POST['password'];
+    $postID = $wpdb->get_var("SELECT post_id FROM $tablename WHERE meta_value = '".$_POST['guest_email']."'");
+    $status = get_post_meta($postID,'status',true);
+    $hash = get_post_meta($postID,'password',true);
+    if( wp_check_password( $password, $hash)){
+        if ($status=='confirmed') {
+            wp_send_json_error("duplicate");
+        }   
+        else{   
+            $wpdb->update(
+                $tablename,
+                array(
+                    'meta_value'=>'confirmed'
+                ),
+                array(
+                    'post_id'=>$postID,
+                    'meta_key'=>'status'
+                    )
+                ); 
+            wp_send_json_success("success");
+        }
+     }       
+    else{
+       wp_send_json_error("failed");
     }    
 } 
 add_action('wp_ajax_verify_credentials','verify_credentials'); 
