@@ -58,11 +58,11 @@ function verify_credentials(){
     $tablename = $wpdb->prefix.'postmeta';
     $password = $_POST['password'];
     $postID = $wpdb->get_var("SELECT post_id FROM $tablename WHERE meta_value = '".$_POST['guest_email']."'");
-    $status=$wpdb->get_var("SELECT meta_value FROM $tablename WHERE post_id = '".$postID."'AND meta_key = 'status'");
-    $hash=$wpdb->get_var("SELECT meta_value FROM $tablename WHERE post_id = '".$postID."'AND meta_key = 'password'");
+    $status = get_post_meta($postID,'status',true);
+    $hash = get_post_meta($postID,'password',true);
     if( wp_check_password( $password, $hash)){
         if ($status=='confirmed') {
-            wp_die("duplicate");
+            wp_send_json_error("duplicate");
         }   
         else{   
             $wpdb->update(
@@ -75,11 +75,11 @@ function verify_credentials(){
                     'meta_key'=>'status'
                     )
                 ); 
-            wp_die("success");
+            wp_send_json_success("success");
         }
      }       
     else{
-       wp_die("failed");
+       wp_send_json_error("failed");
     }    
 } 
 add_action('wp_ajax_verify_credentials','verify_credentials'); 

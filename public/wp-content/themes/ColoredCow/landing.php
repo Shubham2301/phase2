@@ -12,7 +12,8 @@
 			<?php
 				$args = array('post_type' => 'soiree', 'posts_per_page' => 1);
 				$loop = new WP_Query( $args);
-				while ($loop->have_posts()) : $loop->the_post();
+				if($loop){
+					while ($loop->have_posts()) : $loop->the_post();
 			?>	
 					<div class="soiree_name">
 						<h1><?php echo get_the_title();?></h1>
@@ -33,17 +34,22 @@
 							$page=get_page_by_title("RSVP"); 
 							$link_rsvp=get_page_link($page->ID); 
 						?>
-						<a href="<?php echo $link_rsvp;?>" target="_blank">Click Here to RSVP for this Event</a>
+						<button class="btn btn-success form-control"><a href="<?php echo $link_rsvp;?>" target="_blank">Click Here to RSVP for this Event</a></button>
 					</div>
+					<br>
 					<div class="link">
 						<?php
 							$page=get_page_by_title("Register Guest"); 
 							$link_register_page=get_page_link($page->ID); 
 						?>
-						<a href="<?php echo $link_register_page;?>" target="_blank">Click Here to Register for this Event</a>
+						<button class="btn btn-success form-control"><a href="<?php echo $link_register_page;?>" target="_blank">Click Here to Register for this Event</a></button>
 					</div>
 
-				<?php endwhile;?>
+			<?php
+					endwhile;
+					wp_reset_query(); 
+				}
+			?>
 		</div>
 	</div>
 </div>					

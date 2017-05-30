@@ -16,19 +16,20 @@
 		<div class="col-md-12">		
 			<form id="verification_form">
 				<div>
-					<input type="hidden" value="verify_credentials" name="action"/>
+					<input type="hidden" value="verify_credentials" name="action">
 				</div>
 				<br>
 				<div>
 					<label for="email">ENTER YOUR EMAIL</label>
 					<br>
-					<input type="email"  id="guest_email" name="guest_email" required>
+					<input type="email"  id="guest_email" name="guest_email" required class="form-control">
 				</div>
 				<div>
 				 	<label for="password">PASSWORD</label>
 					<br>
-					<input type="password" id="password" name="password" required>
+					<input type="password" id="password" name="password" required class="form-control">
 				</div>
+				<br>
 				<div>
 					<button type="button" id="submit_field" name="submit_here" class="btn btn-success">Click</button>
 				</div>
