@@ -10,22 +10,27 @@
 		<div>
 			<input type="hidden" value="add_subscriber" name="action" />
 			<label for="name">NAME</label>
-			<br />
+			<br>
 			<input type="text" id="name" size="20" name="name" required />
 		</div>
 		<div>
 			<label for="phone">PHONE NO.</label>
-			<br />
+			<br>
 			<input type="number" id="phone" size="10" name="phone" required />
 		</div>
 		<div>
 			<label for="email">EMAIL</label>
-			<br />
+			<br>
 			<input type="email" id="email" size="40" name="email" required />
 		</div>
 		<div>
+			<label for="password">PASSWORD</label>
+			<br>
+			<input type="password" id="password" name="password" required />
+		</div>	
+		<div>
 			<label for="gender">GENDER</label>	
-			</br>
+			<br>
 			<input type="radio" name="gender" value="male" id="Male">Male
 			<input type="radio" name="gender" value="female" id="Female">Female 
 		</div>	

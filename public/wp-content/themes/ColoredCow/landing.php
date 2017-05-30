@@ -5,6 +5,7 @@
 ?>
 
 <?php get_header(); ?>
+
 <?php
 	$args = array('post_type' => 'soiree', 'posts_per_page' => 1);
 	$loop = new WP_Query( $args);
@@ -38,6 +39,7 @@
 			?>
 			<a href="<?php echo $link_register_page;?>" target="_blank">Click Here to Register for this Event</a>
 		</div>
+
 	<?php endwhile;?>	
 
 <?php get_footer();?>

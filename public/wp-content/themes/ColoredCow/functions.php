@@ -18,11 +18,15 @@ if ( ! function_exists( 'cc_styles' ) ) {
 }
 
 add_filter('show_admin_bar','__return_false');
+
 function add_subscriber(){
     $post_title = $_POST['name'];
     $post_phone = $_POST['phone'];
     $post_email = $_POST['email'];
+    $post_password= $_POST['password'];
     $post_gender= $_POST['gender'];
+
+    $hash = wp_hash_password( $post_password );
     if(check_duplicate_entry($post_phone,$post_email)==true){
         $my_post = array(
           'post_title'    => $post_title,
@@ -33,6 +37,7 @@ function add_subscriber(){
         if('$post_id'){
             add_post_meta($post_id, 'phone', $post_phone);
             add_post_meta($post_id, 'email', $post_email);
+            add_post_meta($post_id, 'password', $hash);
             add_post_meta($post_id, 'gender', $post_gender);
         }
         wp_send_json_success();
@@ -44,6 +49,7 @@ function add_subscriber(){
 
 add_action('wp_ajax_add_subscriber', 'add_subscriber');
 add_action('wp_ajax_nopriv_add_subscriber', 'add_subscriber');
+
 
 function verify_credentials(){
     global $wpdb;
