@@ -8,11 +8,11 @@
 
 <div class="container">
 	<div class="row">
-		<div class="column-md-12">
+		<div class="col-md-12">
 			<?php
 				$args = array('post_type' => 'soiree', 'posts_per_page' => 1);
 				$loop = new WP_Query( $args);
-				if($loop){
+				if($loop->have_posts()){
 					while ($loop->have_posts()) : $loop->the_post();
 			?>	
 					<div class="soiree_name">
@@ -39,19 +39,18 @@
 					<br>
 					<div class="link">
 						<?php
-							$page=get_page_by_title("Register Guest"); 
-							$link_register_page=get_page_link($page->ID); 
+							$page=get_page_by_title("Register Guest");
+							$link_register_page=get_page_link($page->ID);
 						?>
 						<button class="btn btn-success form-control"><a href="<?php echo $link_register_page;?>" target="_blank">Click Here to Register for this Event</a></button>
 					</div>
 
 			<?php
 					endwhile;
-					wp_reset_query(); 
 				}
+				wp_reset_query(); 
 			?>
 		</div>
 	</div>
-</div>					
-
+</div>
 <?php get_footer();?>
