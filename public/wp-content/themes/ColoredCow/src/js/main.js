@@ -44,11 +44,11 @@ function RSVP() {
             } else if (response.match(/duplicate/gi)) {
                 window.alert("your have already registered your response");
             } else {
-                window.alert("sorry no entry found with this credentials");
+                window.alert("sorry !!! credential mis-match or you are not registered in our list");
             }
         },
         error: function() {
-            console.log("ajax failed");
+            window.alert("some error occured!! contact the administrator");
         }
     });
 }

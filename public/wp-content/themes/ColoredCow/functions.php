@@ -53,22 +53,18 @@ add_action('wp_ajax_nopriv_add_subscriber', 'add_subscriber');
 
 
 
-function verify_credentials()
-{
+function verify_credentials(){
     global $wpdb;
     $tablename = $wpdb->prefix.'postmeta';
     $password = $_POST['password'];
     $postID = $wpdb->get_var("SELECT post_id FROM $tablename WHERE meta_value = '".$_POST['guest_email']."'");
     $status=$wpdb->get_var("SELECT meta_value FROM $tablename WHERE post_id = '".$postID."'AND meta_key = 'status'");
     $hash=$wpdb->get_var("SELECT meta_value FROM $tablename WHERE post_id = '".$postID."'AND meta_key = 'password'");
-    if ($status=='confirmed') 
-    {
-        wp_die("duplicate");
-    }   
-    else
-        {
-        if( wp_check_password( $password, $hash))
-        {   
+    if( wp_check_password( $password, $hash)){
+        if ($status=='confirmed') {
+            wp_die("duplicate");
+        }   
+        else{   
             $wpdb->update(
                 $tablename,
                 array(
@@ -81,10 +77,9 @@ function verify_credentials()
                 ); 
             wp_die("success");
         }
-        else
-        {
-           wp_die("failed");
-        }
+     }       
+    else{
+       wp_die("failed");
     }    
 } 
 add_action('wp_ajax_verify_credentials','verify_credentials'); 
