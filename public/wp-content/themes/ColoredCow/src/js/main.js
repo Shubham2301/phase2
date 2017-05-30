@@ -18,7 +18,7 @@ function addSubscriber() {
         url: PARAMS.ajaxurl,
         data: add_subscriber_form.serialize(),
         success: function(response) {
-            if (response) {
+            if (response.success) {
                 window.alert("Congratulations!!! you have successfully registered for this event");
             } else {
                 window.alert("ERROR! these credentials are already registered");
