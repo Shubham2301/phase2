@@ -44,7 +44,7 @@
 											<br>
 											<input type="password" id="password" name="password" required class="form-control input-lg" placeholder="enter your password here">
 										<br>
-											<button type="button" id="submit_field" name="submit_here" class="btn btn-info btn-md ">RSVP</button>
+											<button type="button" id="submit_field" name="submit_here" class="btn btn-info btn-md btn-block">RSVP</button>
 									</form>
 								</div>
 								<div class="col-md-8 rsvp">
