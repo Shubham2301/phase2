@@ -19,7 +19,7 @@
 								<h1 class="page-title"><?php echo get_the_title();?></h1>
 								<div class="row content text">
 									<div class="col-lg-12 text-center">
-											<div><?php echo get_the_content();?></div>
+											<div><?php echo wpautop(get_the_content());?></div>
 									</div>
 								</div>
 								<div class="row soiree_dates text">
