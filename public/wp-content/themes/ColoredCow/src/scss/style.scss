@@ -67,4 +67,47 @@ Text Domain: coloredcow
     margin-top: 30px;
 }
 
+.guest-register-page {
+    label {
+        font-family: 'Indie Flower', cursive;
+        font-size: 20px;
+        font-weight: bold;
+        margin-top: 10px;
+    }
+}
+
+.register-form {
+    margin-top: 20px;
+}
+
+.gender {
+    label {
+        position: relative;
+        left: 27px;
+    }
+    .radio-gender {
+        position: relative;
+        font-family: 'Indie Flower', cursive;
+        font-size: 18px;
+        font-weight: bold;
+        left: 27px;
+        #Female {
+            margin-left: 12px;
+        }
+        margin-bottom: 20px;
+    }
+}
+
+#save_id {
+    font-family: 'Indie Flower', cursive;
+    font-size: 20px;
+    position: relative;
+    left: 10px;
+}
+
+.fade {
+    font-family: 'Indie Flower', cursive;
+    font-size: 16px;
+}
+
 @import 'media';
