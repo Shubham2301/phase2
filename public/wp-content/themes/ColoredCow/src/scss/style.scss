@@ -38,29 +38,30 @@ Text Domain: coloredcow
 .page-title {
     font-family: 'Gloria Hallelujah', cursive;
     font-size: 40px;
-    color: #000000;
+    color: $black;
+}
+
+.text {
+    font-family: 'Indie Flower', cursive;
+    font-size: 22px;
+    font-weight: bold;
 }
 
 .content {
-    font-family: 'Indie Flower', cursive;
-    font-size: 22px;
-    font-weight: bold;
-    color: #FF0000;
+    @extend .text;
+    color: $red;
 }
 
 .link {
-    font-family: 'Indie Flower', cursive;
-    font-size: 22px;
-    color: #000000;
-    font-weight: bold;
+    @extend .text;
+    color: $black;
     margin-top: 40px;
 }
 
 .soiree_dates {
-    font-family: 'Indie Flower', cursive;
-    font-weight: bold;
+    @extend .text;
     font-size: 30px;
-    color: #800000;
+    color: $magenta;
 }
 
 @import 'media';
