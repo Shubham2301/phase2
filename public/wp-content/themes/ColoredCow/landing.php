@@ -54,28 +54,16 @@
 									?>
 									<p class="row link text-center"> If not! then hurry up and become a guest user by:</p>
 									 <a class="btn btn-info btn-lg" role="button" href="<?php echo $link_register_page;?>" target="_blank">REGISTERING HERE</a>
-								</div>	
-							</div>				 
+								</div>
+							</div>
 				<?php
 						endwhile;
 					endif;
-					wp_reset_query(); 
+					wp_reset_query();
 				?>
 			</div>
 		</div>
 	</div>
 	<br>
-	<!-- <div class="container"> -->
-			<!-- <?php
-				$page = get_page_by_title("RSVP"); 
-				$link_rsvp = get_page_link($page->ID); 
-			?>
-			<p class="row link text-center">Already have a guest account?? <a class="btn btn-info btn-lg" role="button" href="<?php echo $link_rsvp;?>" target="_blank">RSVP HERE</a></p> -->
-			<!-- <?php
-				$page = get_page_by_title("Register Guest");
-				$link_register_page = get_page_link($page->ID) . "?eid=" . $post->ID;
-			?>
-			<p class="row link text-center"> If not! then hurry up and become a guest user by: <a class="btn btn-info btn-lg" role="button" href="<?php echo $link_register_page;?>" target="_blank">REGISTERING HERE</a></p>
-	</div> -->
 </div>
 <?php get_footer();?>
