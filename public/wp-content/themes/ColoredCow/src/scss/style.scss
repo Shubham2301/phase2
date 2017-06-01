@@ -39,6 +39,9 @@ Text Domain: coloredcow
     @extend .font-gloria-hallelujah;
     font-size: 40px;
     color: $black;
+    a {
+        color: $black;
+    }
 }
 
 .text {
@@ -62,6 +65,8 @@ Text Domain: coloredcow
     @extend .text;
     font-size: 30px;
     color: $magenta;
+    margin-bottom: 50px;
+    margin-top: 20px;
 }
 
 @import 'media';
