@@ -11,27 +11,57 @@ Text Domain: coloredcow
 @import 'variables';
 @import 'mixin';
 @import 'fonts';
-
 // sass code for image alignment with content
-.alignright{
-	float: right;
-	&img{
-		margin: 0 0 1em 1em;
-	}
+.alignright {
+    float: right;
+    &img {
+        margin: 0 0 1em 1em;
+    }
 }
-.alignleft{
-	float: left;
-	&img{
-		margin: 0 1em 1em 0;
-	}
+
+.alignleft {
+    float: left;
+    &img {
+        margin: 0 1em 1em 0;
+    }
 }
-.aligncenter{
-	display: block;
-	margin-left: auto;
-	margin-right: auto;
-	&img{
-		display: block;
-	}
+
+.aligncenter {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    &img {
+        display: block;
+    }
+}
+
+.page-title {
+    @extend .font-gloria-hallelujah;
+    font-size: 40px;
+    color: $black;
+}
+
+.text {
+    @extend .font-indie-flower;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.content {
+    @extend .text;
+    color: $red;
+}
+
+.link {
+    @extend .text;
+    color: $black;
+    margin-top: 40px;
+}
+
+.soiree_dates {
+    @extend .text;
+    font-size: 30px;
+    color: $magenta;
 }
 
 @import 'media';
