@@ -6,10 +6,6 @@
 
 <?php get_header(); ?>
 
-<?php 
-	// $title = get_the_title($_GET['eid']);
-
- ?>
 <div class="container">
 	<div class="row">
 		<div class="col-md-12">
