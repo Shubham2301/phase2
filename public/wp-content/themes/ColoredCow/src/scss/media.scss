@@ -1,29 +1,44 @@
 /*--------------------------------------------------Large-------------------------------------------------*/
 
-@media only screen and (min-width: 1200px) {
-   
-}
+@media only screen and (min-width: 1200px) {}
 
 
 /*--------------------------------------------------medium-------------------------------------------------*/
 
-@media only screen and (max-width: 1199px) and (min-width: 992px) {
-    
-}
+@media only screen and (max-width: 1199px) and (min-width: 992px) {}
 
-   
+
 /*--------------------------------------------------tablet-------------------------------------------------*/
 
-@media only screen and (max-width: 991px) and (min-width: 768px) {
-    
-}
+@media only screen and (max-width: 991px) and (min-width: 768px) {}
+
+
 /*--------------------------------------------------phone-------------------------------------------------*/
 
-@media only screen and (max-width: 767px) and (min-width: 480px) {
-    
-}
+@media only screen and (max-width: 767px) and (min-width: 480px) {}
+
+
 /*--------------------------------------------------phone-------------------------------------------------*/
 
 @media only screen and (max-width: 479px) {
-    
+    .page-title {
+        font-size: 30px;
+    }
+    .content {
+        font-size: 14px;
+    }
+    .rsvp {
+        font-size: 14px;
+        margin-top: 40px;
+        label {
+            font-size: 16px;
+        }
+    }
+    .soiree_dates {
+        font-size: 20px;
+        margin-top: 30px;
+    }
+    .input-lg {
+        height: 30px;
+    }
 }

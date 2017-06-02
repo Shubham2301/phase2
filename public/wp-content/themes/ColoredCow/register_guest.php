@@ -13,7 +13,7 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-md-12">		
+		<div class="col-md-12">
 			<form id="add_subscriber_form" >
 				<div>
 					<input type="hidden" value="add_subscriber" name="action" />
@@ -35,20 +35,19 @@
 					<label for="password">PASSWORD</label>
 					<br>
 					<input type="password" id="password" name="password" required class="form-control" placeholder="select a password for your account" />
-				</div>	
+				</div>
 				<div>
-					<label for="gender">GENDER</label>	
+					<label for="gender">GENDER</label>
 					<br>
 					<input type="radio" name="gender" value="male" id="Male">Male
-					<input type="radio" name="gender" value="female" id="Female">Female 
-				</div>	
+					<input type="radio" name="gender" value="female" id="Female">Female
+				</div>
 				<div>
-					<button type="button" name="save" id="save_id" class="btn btn-success btn-block">SUBMIT</button>
-				</div>		
+					<button type="button" name="save" id="save_id" class="btn btn-success">SUBMIT</button>
+				</div>
 			</form>
 		</div>
 	</div>
-</div>	
-
+</div>
 
 <?php get_footer(); ?>

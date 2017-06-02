@@ -41,27 +41,33 @@ Text Domain: coloredcow
     color: $black;
 }
 
-.text {
-    @extend .font-indie-flower;
+.content {
     font-size: 22px;
     font-weight: bold;
-}
-
-.content {
-    @extend .text;
+    @extend .font-dancing-script;
     color: $red;
 }
 
 .link {
-    @extend .text;
+    @extend .font-indie-flower;
+    font-weight: bold;
     color: $black;
     margin-top: 40px;
 }
 
 .soiree_dates {
-    @extend .text;
+    @extend .font-indie-flower;
+    font-weight: bold;
     font-size: 30px;
     color: $magenta;
+}
+
+.rsvp {
+    @extend .font-indie-flower;
+    font-size: 22px;
+    label {
+        font-size: 16px;
+    }
 }
 
 @import 'media';
