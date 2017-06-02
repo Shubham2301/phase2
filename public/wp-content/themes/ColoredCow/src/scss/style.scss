@@ -36,7 +36,7 @@ Text Domain: coloredcow
 }
 
 .page-title {
-    font-family: 'Gloria Hallelujah', cursive;
+    @extend .font-gloria-hallelujah;
     font-size: 40px;
     color: $black;
 }
@@ -49,65 +49,32 @@ Text Domain: coloredcow
 }
 
 .rsvp {
-    font-family: 'Indie Flower', cursive;
     font-size: 22px;
-    color: $black;
     font-weight: bold;
+    @extend .font-dancing-script;
+    color: $red;
+}
+
+.link {
+    @extend .font-indie-flower;
+    font-weight: bold;
+    color: $black;
     margin-top: 40px;
-    label {
-        font-size: 16px;
-    }
 }
 
 .soiree_dates {
-    font-family: 'Indie Flower', cursive;
+    @extend .font-indie-flower;
     font-weight: bold;
     font-size: 30px;
     color: $magenta;
-    margin-top: 30px;
 }
 
-.guest-register-page {
+.rsvp {
+    @extend .font-indie-flower;
+    font-size: 22px;
     label {
-        font-family: 'Indie Flower', cursive;
-        font-size: 20px;
-        font-weight: bold;
-        margin-top: 10px;
+        font-size: 16px;
     }
-}
-
-.register-form {
-    margin-top: 20px;
-}
-
-.gender {
-    label {
-        position: relative;
-        left: 27px;
-    }
-    .radio-gender {
-        position: relative;
-        font-family: 'Indie Flower', cursive;
-        font-size: 18px;
-        font-weight: bold;
-        left: 27px;
-        #Female {
-            margin-left: 12px;
-        }
-        margin-bottom: 20px;
-    }
-}
-
-#save_id {
-    font-family: 'Indie Flower', cursive;
-    font-size: 20px;
-    position: relative;
-    left: 10px;
-}
-
-.fade {
-    font-family: 'Indie Flower', cursive;
-    font-size: 16px;
 }
 
 @import 'media';

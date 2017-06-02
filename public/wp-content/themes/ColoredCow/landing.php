@@ -18,12 +18,12 @@
 				?>
 							<h1 class="page-title"><?php echo get_the_title();?></h1>
 							<p class="fade" id="rsvp-response-text"></p>
-							<div class="row content">
+							<div class="row content text">
 								<div class="col-lg-12 text-center">
 									<div><?php echo get_the_content();?></div>
 								</div>
 							</div>
-							<div class="row soiree_dates">
+							<div class="row soiree_dates text">
 								<div class="col-lg-6 text-center">
 									<div>Soiree Date:</div>
 									<div><?php echo get_field('event_date');?></div>
@@ -34,7 +34,7 @@
 								</div>
 							</div>
 							<div class="row">
-								<div class="col-md-4 rsvp">
+								<div class="col-md-4 rsvp text">
 									<p class="row link text-center">Already have a guest account?? RSVP HERE</p>
 									<form id="verification_form" class="text-left form-horizontal">
 											<input type="hidden" value="verify_credentials" name="action">
@@ -48,7 +48,7 @@
 											<button type="button" id="submit_field" name="submit_here" class="btn btn-primary btn-md btn-block ">RSVP</button>
 									</form>
 								</div>
-								<div class="col-md-8 rsvp">
+								<div class="col-md-8 rsvp text">
 									<?php
 										$page = get_page_by_title("Register Guest");
 										$link_register_page = get_page_link($page->ID) . "?eid=" . $post->ID;
@@ -65,6 +65,6 @@
 			</div>
 		</div>
 	</div>
-	<br>
 </div>
+
 <?php get_footer();?>
