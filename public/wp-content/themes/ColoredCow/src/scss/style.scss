@@ -53,6 +53,9 @@ Text Domain: coloredcow
     font-weight: bold;
     @extend .font-dancing-script;
     color: $red;
+    label {
+        font-size: 16px;
+    }
 }
 
 .link {
@@ -69,12 +72,37 @@ Text Domain: coloredcow
     color: $magenta;
 }
 
-.rsvp {
-    @extend .font-indie-flower;
-    font-size: 22px;
-    label {
-        font-size: 16px;
+.register-form {
+    margin-top: 40px;
+    button {
+        @extend .font-indie-flower;
+        font-size: 20px;
     }
+    .gender {
+        position: relative;
+        left: 18px;
+    }
+}
+
+.field {
+    margin-bottom: 15px;
+    label {
+        @extend .font-indie-flower;
+        font-size: 20px;
+    }
+    .radio-gender {
+        @extend .font-indie-flower;
+        font-size: 18px;
+    }
+    input {
+        @extend .font-indie-flower;
+        font-size: 18px;
+    }
+}
+
+.page-alerts {
+    @extend .font-gloria-hallelujah;
+    font-size: 25px;
 }
 
 @import 'media';
