@@ -17,7 +17,7 @@
 			<div class="col-md-12">
 				<p class="fade" id="register-response-text"></p>
 			</div>
-		</div>		
+		</div>
 		<div class="row register-form">
 			<div class="col-md-12">
 				<form id="add_subscriber_form" >
@@ -34,7 +34,7 @@
 							<input type="password" id="password" name="password" required class="form-control" placeholder="select a password for your account" />
 						</div>
 					</div>
-					<div class="row">	
+					<div class="row">
 						<div class="col-md-6 field">
 							<label for="phone">PHONE NO.</label>
 							<br>
@@ -45,22 +45,22 @@
 							<br>
 							<input type="email" id="email" size="40" name="email" required class="form-control" placeholder="enter your contact email" />
 						</div>
-					</div>	
+					</div>
 					<div class="row gender field">
-						<label for="gender">GENDER</label>	
+						<label for="gender">GENDER</label>
 						<br>
 						<div class=radio-gender>
 							<input type="radio" name="gender" value="male" id="acf-field-gender-male" required>Male
 							<input type="radio" name="gender" value="female" id="acf-field-gender-female">Female 
 						</div>
-					</div>	
+					</div>
 					<div>
 						<button type="button" name="save" id="save_id" class="btn btn-primary">Create</button>
-					</div>		
+					</div>
 				</form>
 			</div>
 		</div>
 	</div>
-</div>		
+</div>
 
 <?php get_footer(); ?>

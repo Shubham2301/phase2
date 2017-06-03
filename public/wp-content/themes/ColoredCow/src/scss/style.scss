@@ -42,7 +42,7 @@ Text Domain: coloredcow
 }
 
 .content {
-    font-family: 'Dancing Script', cursive;
+    @extend .font-dancing-script;
     font-size: 22px;
     font-weight: bold;
     color: $red;

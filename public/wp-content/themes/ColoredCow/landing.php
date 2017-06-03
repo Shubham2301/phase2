@@ -55,12 +55,12 @@
 									?>
 									<p class="row link text-center"> If not! then hurry up and become a guest user by:</p>
 									 <a class="btn btn-primary btn-lg" role="button" href="<?php echo $link_register_page;?>" target="_blank">REGISTERING HERE</a>
-								</div>	
-							</div>				 
+								</div>
+							</div>
 				<?php
 						endwhile;
 					endif;
-					wp_reset_query(); 
+					wp_reset_query();
 				?>
 			</div>
 		</div>

@@ -40,11 +40,11 @@ function RSVP() {
         data: dataString,
         success: function(response) {
             if (response.success) {
-                showRSVPSuccessAlert()
+                showRSVPSuccessAlert();
             } else if (response.data == "duplicate") {
-                showRSVPDuplicateAlert()
+                showRSVPDuplicateAlert();
             } else {
-                showRSVPErrorAlert()
+                showRSVPErrorAlert();
             }
         },
         error: function() {
