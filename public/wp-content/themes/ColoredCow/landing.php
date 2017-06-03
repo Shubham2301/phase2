@@ -17,6 +17,7 @@
 						while ($loop->have_posts()) : $loop->the_post();
 				?>
 							<h1 class="page-title"><?php echo get_the_title();?></h1>
+							<p class="fade" id="rsvp-response-text"></p>
 							<div class="row content text">
 								<div class="col-lg-12 text-center">
 									<div><?php echo get_the_content();?></div>
@@ -44,7 +45,7 @@
 											<br>
 											<input type="password" id="password" name="password" required class="form-control input-lg" placeholder="enter your password here">
 										<br>
-											<button type="button" id="submit_field" name="submit_here" class="btn btn-info btn-md btn-block">RSVP</button>
+											<button type="button" id="submit_field" name="submit_here" class="btn btn-primary btn-md btn-block ">RSVP</button>
 									</form>
 								</div>
 								<div class="col-md-8 rsvp text">
@@ -53,7 +54,7 @@
 										$link_register_page = get_page_link($page->ID) . "?eid=" . $post->ID;
 									?>
 									<p class="row link text-center"> If not! then hurry up and become a guest user by:</p>
-									 <a class="btn btn-info btn-lg" role="button" href="<?php echo $link_register_page;?>" target="_blank">REGISTERING HERE</a>
+									 <a class="btn btn-primary btn-lg" role="button" href="<?php echo $link_register_page;?>" target="_blank">REGISTERING HERE</a>
 								</div>
 							</div>
 				<?php
@@ -64,9 +65,6 @@
 			</div>
 		</div>
 	</div>
-</div>	
+</div>
 
-
-			
-		
 <?php get_footer();?>

@@ -84,7 +84,7 @@ function verify_credentials(){
     }    
 } 
 add_action('wp_ajax_verify_credentials','verify_credentials'); 
-add_action('wp_ajax_nopriv_verify_credentials','verify_credentials');   
+add_action('wp_ajax_nopriv_verify_credentials','verify_credentials');
 
 function check_duplicate_entry($phone,$email){
     global $wpdb;
