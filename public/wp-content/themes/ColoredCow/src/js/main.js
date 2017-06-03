@@ -19,9 +19,9 @@ function addSubscriber() {
         data: add_subscriber_form.serialize(),
         success: function(response) {
             if (response.success) {
-                window.alert("Congratulations!!! you have successfully registered for this event");
+                showRegisterSuccessAlert();
             } else {
-                window.alert("ERROR! these credentials are already registered");
+                showRegisterDuplicateAlert()
             }
         }
     });
@@ -40,15 +40,50 @@ function RSVP() {
         data: dataString,
         success: function(response) {
             if (response.success) {
-                window.alert("your response has been accepted");
+                showRSVPSuccessAlert();
             } else if (response.data == "duplicate") {
-                window.alert("your have already registered your response");
+                showRSVPDuplicateAlert();
             } else {
-                window.alert("sorry !!! credential mis-match or you are not registered in our list");
+                showRSVPErrorAlert();
             }
         },
         error: function() {
             window.alert("some error occured!! contact the administrator");
         }
     });
+}
+
+function showRegisterSuccessAlert() {
+    jQuery('#register-response-text')
+        .removeClass('alert-warning')
+        .addClass('in alert-success text-center')
+        .html('<strong>Congratulations!!</strong>You have successfully registered to our guest list.');
+}
+
+function showRegisterDuplicateAlert() {
+    jQuery('#register-response-text')
+        .removeClass('alert-success')
+        .addClass('in alert-warning text-center')
+        .html('<strong>Oops!!!</strong>Are you sure you are new here?? These credentials are already registered.');
+}
+
+function showRSVPSuccessAlert() {
+    jQuery('#rsvp-response-text')
+        .removeClass('alert-warning alert-danger')
+        .addClass('in alert-success')
+        .html('<strong>Congratulations!!</strong> we will be expecting you');
+}
+
+function showRSVPDuplicateAlert() {
+    jQuery('#rsvp-response-text')
+        .removeClass('alert-success alert-danger')
+        .addClass('in alert-warning')
+        .html('<strong>Oops!!!</strong> I think you have you have already registered your response');
+}
+
+function showRSVPErrorAlert() {
+    jQuery('#rsvp-response-text')
+        .removeClass('alert-success alert-warning')
+        .addClass('in alert-danger')
+        .html('<strong>Oops!!!</strong> your credentials are not matching');
 }
