@@ -58,6 +58,7 @@ function verify_credentials(){
     global $wpdb;
     $tablename = $wpdb->prefix.'postmeta';
     $password = $_POST['password'];
+    $rsvp_date = date("d/m/y");
     $postID = $wpdb->get_var("SELECT post_id FROM $tablename WHERE meta_value = '".$_POST['guest_email']."'");
     $status = get_post_meta($postID,'status',true);
     $hash = get_post_meta($postID,'password',true);
@@ -67,6 +68,7 @@ function verify_credentials(){
         }   
         else{
 
+            event_attendance($event_id,$postID,$rsvp_date);
             // $wpdb->update(
             //     $tablename,
             //     array(
@@ -94,19 +96,25 @@ function check_duplicate_entry($phone,$email){
     return $rowcount ? false : true;
 }
 
-/** Step 2 (from text above). */
 add_action( 'admin_menu', 'wpdocs_register_my_custom_menu_page' );
 
-/** Step 1. */
 function wpdocs_register_my_custom_menu_page() {
-    add_menu_page( 'Event Attendance','Guest Event Attendance', 'manage_options', 'event_attendance', 'eventAttendance' );
+    add_menu_page( 'Event Attendance','Guest Event Attendance', 'manage_options', 'event_attendance', 'eventAttendancescreen' );
 }
 
-/** Step 3. */
-function eventAttendance() {
-    // if ( !current_user_can( 'manage_options' ) )  {
-    //     wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
-    // }
+function eventAttendancescreen() {
     include "event_attendance.php";
+}
+
+function event_attendance($soiree_ID,$guest_id,$date)
+{
+       $soiree = array(
+                    $guest = array(
+                            "status" => "pending",
+                            "rsvp_date" => "date",
+                            "name" => "abc"
+                        )
+                    );
+       return json_encode($soiree);
 }
 ?>
