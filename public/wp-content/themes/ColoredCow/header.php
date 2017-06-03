@@ -9,11 +9,15 @@
     <?php wp_head(); ?>
     <nav class = "navbar navbar-default" role = "navigation">
         <div class = "navbar-header">
-            <a class = "navbar-brand" href = "#">SOIREE</a>
+            <a class = "navbar-brand" href="<?php echo get_home_url(); ?>">SOIREE</a>
         </div>
         <div>
-            <ul class = "nav navbar-nav navbar-right" style= "margin-right: 0">
-                <li class = ""><a href = "#">RSVP</a></li>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0">
+                <?php 
+                    $page = get_page_by_title("All Soirees");
+                    $link_all_soiree_page = get_page_link($page->ID) 
+                ?>
+                <li><a href="<?php echo $link_all_soiree_page; ?>">All-Soirees</a></li>
             </ul>
         </div>
     </nav>

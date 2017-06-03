@@ -65,18 +65,19 @@ function verify_credentials(){
         if ($status=='confirmed') {
             wp_send_json_error("duplicate");
         }   
-        else{   
-            $wpdb->update(
-                $tablename,
-                array(
-                    'meta_value'=>'confirmed'
-                ),
-                array(
-                    'post_id'=>$postID,
-                    'meta_key'=>'status'
-                    )
-                ); 
-            wp_send_json_success("success");
+        else{
+
+            // $wpdb->update(
+            //     $tablename,
+            //     array(
+            //         'meta_value'=>'confirmed'
+            //     ),
+            //     array(
+            //         'post_id'=>$postID,
+            //         'meta_key'=>'status'
+            //         )
+            //     ); 
+            // wp_send_json_success("success");
         }
      }       
     else{
@@ -91,5 +92,21 @@ function check_duplicate_entry($phone,$email){
     $tablename = $wpdb->prefix."postmeta";
     $rowcount = $wpdb->get_var("SELECT COUNT(*) FROM $tablename WHERE meta_value = '".$phone."'OR meta_value = '".$email."'");
     return $rowcount ? false : true;
+}
+
+/** Step 2 (from text above). */
+add_action( 'admin_menu', 'wpdocs_register_my_custom_menu_page' );
+
+/** Step 1. */
+function wpdocs_register_my_custom_menu_page() {
+    add_menu_page( 'Event Attendance','Guest Event Attendance', 'manage_options', 'event_attendance', 'eventAttendance' );
+}
+
+/** Step 3. */
+function eventAttendance() {
+    // if ( !current_user_can( 'manage_options' ) )  {
+    //     wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
+    // }
+    include "event_attendance.php";
 }
 ?>
