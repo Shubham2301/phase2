@@ -18,7 +18,8 @@
 				<div class="container">
 					<div class="row">
 						<div class="col-md-12">	
-							<h1 class="page-title text-center"><a href="<?php if($current_date <= $last_date){echo get_home_url();}?>"><?php echo get_the_title();?></a></h1>
+							<h1 class="page-title text-center"><?php if($current_date <= $last_date):?><a href="<?php echo get_home_url();?>"
+						<?php echo ">"; endif;?><?php echo get_the_title();?></a></h1>
 						</div>
 						<div class="row content text">
 							<div class="col-lg-12 text-center">
