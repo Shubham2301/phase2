@@ -59,27 +59,27 @@ function verify_credentials(){
     $tablename = $wpdb->prefix.'postmeta';
     $password = $_POST['password'];
     $rsvp_date = date("d/m/y");
-    $postID = $wpdb->get_var("SELECT post_id FROM $tablename WHERE meta_value = '".$_POST['guest_email']."'");
-    $status = get_post_meta($postID,'status',true);
-    $hash = get_post_meta($postID,'password',true);
+    $guest_id = $wpdb->get_var("SELECT post_id FROM $tablename WHERE meta_value = '".$_POST['guest_email']."'");
+    $status = get_post_meta($guest_id,'status',true);
+    $hash = get_post_meta($guest_id,'password',true);
+
     if( wp_check_password( $password, $hash)){
         if ($status=='confirmed') {
             wp_send_json_error("duplicate");
-        }   
+        }
         else{
-
-            event_attendance($event_id,$postID,$rsvp_date);
-            // $wpdb->update(
-            //     $tablename,
-            //     array(
-            //         'meta_value'=>'confirmed'
-            //     ),
-            //     array(
-            //         'post_id'=>$postID,
-            //         'meta_key'=>'status'
-            //         )
-            //     ); 
-            // wp_send_json_success("success");
+            $meta_key = 'event_users';
+            $event_id = 245; // should be made dynamic
+            $event_users = get_post_meta( $event_id, $meta_key, true );
+            $guest_name = get_the_title( $guest_id );
+            if($event_users){
+                $event_users[$guest_id] = get_rsvp_guest_meta( $guest_name );
+                update_post_meta( $event_id, $meta_key, $event_users );
+            } else {
+                $event_users[$guest_id] = get_rsvp_guest_meta($guest_name);
+                add_post_meta($event_id, $meta_key, $event_users);
+            }
+            wp_send_json_success("success");
         }
      }       
     else{
@@ -99,22 +99,17 @@ function check_duplicate_entry($phone,$email){
 add_action( 'admin_menu', 'wpdocs_register_my_custom_menu_page' );
 
 function wpdocs_register_my_custom_menu_page() {
-    add_menu_page( 'Event Attendance','Guest Event Attendance', 'manage_options', 'event_attendance', 'eventAttendancescreen' );
+    add_menu_page( 'Event Attendance','Guest Event Attendance Menu', 'manage_options', 'event-attendance', 'eventAttendancescreen' );
 }
 
 function eventAttendancescreen() {
     include "event_attendance.php";
 }
 
-function event_attendance($soiree_ID,$guest_id,$date)
-{
-       $soiree = array(
-                    $guest = array(
-                            "status" => "pending",
-                            "rsvp_date" => "date",
-                            "name" => "abc"
-                        )
-                    );
-       return json_encode($soiree);
+function get_rsvp_guest_meta($guest_name){
+    return array(
+                "status" => "pending",
+                "rsvp_date" => date('Y-m-d'),
+                "name" => $guest_name
+            );
 }
-?>

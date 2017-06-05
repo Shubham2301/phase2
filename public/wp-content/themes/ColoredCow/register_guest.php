@@ -13,7 +13,7 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-md-12">		
+		<div class="col-md-12">
 			<form id="add_subscriber_form" >
 				<div>
 					<input type="hidden" value="add_subscriber" name="action" />
@@ -49,6 +49,17 @@
 		</div>
 	</div>
 </div>	
+<?php
 
+// $post_meta = get_post_meta('event_id', 'event_users');
+// if(!$post_meta ){
+// 	// create post meta format
+// 	add_post_meta(params);
+// } else {
+// 	// append to $post_meta
+// 	update_post_meta(params);
+// }
+
+?>
 
 <?php get_footer(); ?>
