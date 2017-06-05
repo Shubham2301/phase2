@@ -81,10 +81,10 @@ function verify_credentials(){
             }
             wp_send_json_success("success");
         }
-     }       
+    }
     else{
        wp_send_json_error("failed");
-    }    
+    }
 } 
 add_action('wp_ajax_verify_credentials','verify_credentials'); 
 add_action('wp_ajax_nopriv_verify_credentials','verify_credentials');   
@@ -99,7 +99,7 @@ function check_duplicate_entry($phone,$email){
 add_action( 'admin_menu', 'wpdocs_register_my_custom_menu_page' );
 
 function wpdocs_register_my_custom_menu_page() {
-    add_menu_page( 'Event Attendance','Guest Event Attendance Menu', 'manage_options', 'event-attendance', 'eventAttendancescreen' );
+    add_menu_page( 'Event Attendance','Event Attendance', 'manage_options', 'event-attendance', 'eventAttendancescreen' );
 }
 
 function eventAttendancescreen() {

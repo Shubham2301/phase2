@@ -8,10 +8,10 @@
 	<body>
 		<div class "select-button">
 			<select>
-			  <option>soiree1</option>
-			  <option>soiree2</option>
-			  <option>soiree3</option>
-			  <option>soiree4</option>
+				<option>soiree1</option>
+				<option>soiree2</option>
+				<option>soiree3</option>
+				<option>soiree4</option>
 			</select>
 		</div>
 		<div class="container">
@@ -27,33 +27,21 @@
 							</tr>	
 						</thead>
 						<tbody>
-							<?php 
-									$args = array(
-										'post_type'	   => 'guest',
-										'meta_key'     => 'status',
-										'meta_value'   => 'pending'
-									);
-								$query = new WP_Query( $args );
-								if($query->have_posts()):
-									while ($query->have_posts()) : $query->the_post();
-										$post_id = get_the_ID();
-							?>
-										<tr>
-											<td>1</td>
-											<td><?php echo get_the_title($post_id);?></td>
-											<td>test-1 date</td>
-											<td><?php echo get_post_meta($post_id,'status',true); ?></td>
-										</tr>
-							<?php 
-									endwhile; 
-								endif;
-							?>
-							<!-- <tr>
-								<td>2</td>
-								<td>test-2 name</td>
-								<td>test-2 date</td>
-								<td>test-2 status</td>
-							</tr> -->
+						<?php 
+							$event_id = 245;
+							$meta_key = "event_users";
+							$event_users = get_post_meta( $event_id, $meta_key, true );
+							foreach( $event_users as $user_id => $event_user ):
+								?>
+									<tr>
+										<td><?php echo $user_id; ?></td>
+										<td><?php echo $event_user['name']; ?></td>
+										<td><?php echo $event_user['rsvp_date']; ?></td>
+										<td><?php echo $event_user['status']; ?></td>
+									</tr>
+								<?php
+							endforeach;
+						?>
 						</tbody>
 					</table>
 				</div>
