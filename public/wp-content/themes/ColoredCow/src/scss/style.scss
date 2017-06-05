@@ -1,4 +1,4 @@
-/*
+    /*
 Theme Name: ColoredCow Theme
 Author: ColoredCow 
 Author URI: http://coloredcow.com
@@ -7,107 +7,107 @@ Version: 1.0.0
 Tags: coloredcow
 Text Domain: coloredcow
 */
-
-@import 'variables';
-@import 'mixin';
-@import 'fonts';
-// sass code for image alignment with content
-.alignright {
-    float: right;
-    &img {
-        margin: 0 0 1em 1em;
+    
+    @import 'variables';
+    @import 'mixin';
+    @import 'fonts';
+    // sass code for image alignment with content
+    .alignright {
+        float: right;
+        &img {
+            margin: 0 0 1em 1em;
+        }
     }
-}
-
-.alignleft {
-    float: left;
-    &img {
-        margin: 0 1em 1em 0;
+    
+    .alignleft {
+        float: left;
+        &img {
+            margin: 0 1em 1em 0;
+        }
     }
-}
-
-.aligncenter {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    &img {
+    
+    .aligncenter {
         display: block;
+        margin-left: auto;
+        margin-right: auto;
+        &img {
+            display: block;
+        }
     }
-}
-
-.page-title {
-    @extend .font-gloria-hallelujah;
-    font-size: 40px;
-    color: $black;
-    a {
+    
+    .page-title {
+        @extend .font-gloria-hallelujah;
+        font-size: 40px;
         color: $black;
+        a {
+            color: $black;
+        }
     }
-}
-
-.content {
-    @extend .font-dancing-script;
-    font-size: 22px;
-    font-weight: bold;
-    color: $red;
-}
-
-.rsvp {
-    font-size: 22px;
-    font-weight: bold;
-    @extend .font-dancing-script;
-    color: $red;
-    label {
-        font-size: 16px;
+    
+    .content {
+        @extend .font-dancing-script;
+        font-size: 22px;
+        font-weight: bold;
+        color: $red;
     }
-}
-
-.link {
-    @extend .font-indie-flower;
-    font-weight: bold;
-    color: $black;
-    margin-top: 40px;
-}
-
-.soiree_dates {
-    @extend .font-indie-flower;
-    font-weight: bold;
-    font-size: 30px;
-    color: $magenta;
-    margin-bottom: 50px;
-    margin-top: 20px;
-}
-
-.register-form {
-    margin-top: 40px;
-    button {
+    
+    .rsvp {
+        font-size: 22px;
+        font-weight: bold;
+        @extend .font-dancing-script;
+        color: $red;
+        label {
+            font-size: 16px;
+        }
+    }
+    
+    .link {
         @extend .font-indie-flower;
-        font-size: 20px;
+        font-weight: bold;
+        color: $black;
+        margin-top: 40px;
     }
-    .gender {
-        position: relative;
-        left: 18px;
-    }
-}
-
-.field {
-    margin-bottom: 15px;
-    label {
+    
+    .soiree_dates {
         @extend .font-indie-flower;
-        font-size: 20px;
+        font-weight: bold;
+        font-size: 30px;
+        color: $magenta;
+        margin-bottom: 50px;
+        margin-top: 20px;
     }
-    .radio-gender {
-        @extend .font-indie-flower;
-        font-size: 18px;
+    
+    .register-form {
+        margin-top: 40px;
+        button {
+            @extend .font-indie-flower;
+            font-size: 20px;
+        }
+        .gender {
+            position: relative;
+            left: 18px;
+        }
     }
-    input {
-        @extend .font-indie-flower;
-        font-size: 18px;
+    
+    .field {
+        margin-bottom: 15p x;
+        label {
+            @extend .font-indie-flower;
+            font-size: 20px;
+        }
+        .radio-gender {
+            @extend .font-indie-flower;
+            font-size: 18px;
+        }
+        input {
+            @extend .font-indie-flower;
+            font-size: 18px;
+        }
     }
-}
-
-.page-alerts {
-    @extend .font-gloria-hallelujah;
-    font-size: 25px;
-}
-
-@import 'media';
+    
+    .page-alerts {
+        @extend .font-gloria-hallelujah;
+        font-size: 25px;
+    }
+    
+    @import 'media';

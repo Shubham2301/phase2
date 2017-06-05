@@ -12,7 +12,7 @@
             <a class = "navbar-brand" href = "<?php echo get_home_url(); ?>">SOIREE</a>
         </div>
         <div>
-            <ul class = "nav navbar-nav navbar-right" style= "margin-right: 0">
+            <ul class = "nav navbar-nav navbar-right element" style= "margin-right: 0">
                 <?php 
                     $page = get_page_by_title("All Soirees");
                     $link_all_soiree_page = get_page_link($page->ID) 
