@@ -7,7 +7,7 @@
     <meta name="viewport" content="initial-scale=1">
     <title><?php echo bloginfo('name'); ?></title>
     <?php wp_head(); ?>
-    <nav class = "navbar navbar-default" role = "navigation">
+    <nav class = "navbar navbar-static-top navbar-default navbar-inverse" role = "navigation">
         <div class = "navbar-header">
             <a class = "navbar-brand" href="<?php echo get_home_url(); ?>">SOIREE</a>
         </div>
@@ -15,7 +15,7 @@
             <ul class="nav navbar-nav navbar-right" style="margin-right: 0">
                 <?php 
                     $page = get_page_by_title("All Soirees");
-                    $link_all_soiree_page = get_page_link($page->ID) 
+                    $link_all_soiree_page = get_page_link($page->ID); 
                 ?>
                 <li><a href="<?php echo $link_all_soiree_page; ?>">All-Soirees</a></li>
             </ul>
@@ -24,4 +24,3 @@
 </head>
 
 <body>
-    
