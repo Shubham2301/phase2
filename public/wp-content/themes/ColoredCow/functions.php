@@ -9,6 +9,14 @@ if ( ! function_exists( 'cc_scripts' ) ) {
     add_action('wp_enqueue_scripts','cc_scripts');
 }
 
+if ( ! function_exists( 'cc_admin_scripts' ) ) {
+    function cc_admin_scripts() {
+        wp_enqueue_script('cc-admin-main', get_template_directory_uri().'/admin-main.js', array('jquery'), '1.0.0', true);
+        wp_localize_script( 'cc-admin-main', 'PARAMS', array('ajaxurl' => admin_url('admin-ajax.php')) );
+    }
+    add_action('admin_enqueue_scripts','cc_admin_scripts');
+}
+
 if ( ! function_exists( 'cc_styles' ) ) {
     function cc_styles() {  
         wp_enqueue_style('et-googleFonts', 'https://fonts.googleapis.com/css?family=El+Messiri:400,700|Gloria+Hallelujah|Indie+Flower');
@@ -58,6 +66,7 @@ function verify_credentials(){
     global $wpdb;
     $tablename = $wpdb->prefix.'postmeta';
     $password = $_POST['password'];
+    $event_id = $_POST['eventID'];
     $rsvp_date = date("d/m/y");
     $guest_id = $wpdb->get_var("SELECT post_id FROM $tablename WHERE meta_value = '".$_POST['guest_email']."'");
     $status = get_post_meta($guest_id,'status',true);
@@ -69,7 +78,6 @@ function verify_credentials(){
         }
         else{
             $meta_key = 'event_users';
-            $event_id = 245; // should be made dynamic
             $event_users = get_post_meta( $event_id, $meta_key, true );
             $guest_name = get_the_title( $guest_id );
             if($event_users){
@@ -113,3 +121,58 @@ function get_rsvp_guest_meta($guest_name){
                 "name" => $guest_name
             );
 }
+
+function get_event_users_html($event_id, $event_users){
+    $html = '';
+    foreach( $event_users as $user_id => $event_user ):
+            $html .= '<tr>';
+            $html .= '<td>' . $user_id . '</td>';
+            $html .= '<td>' . $event_user['name'] . '</td>';
+            $html .= '<td>' . $event_user['rsvp_date'] . '</td>';
+            switch ($event_user['status']) {
+                case 'pending':
+                    $label_class = 'label label-warning';
+                    break;
+                case 'confirmed':
+                    $label_class = 'label label-success';
+                    break;
+                case 'declined':
+                    $label_class = 'label label-danger';
+                    break;
+                default:
+                    $label_class = "";
+                    break;
+            }
+            $html .= '<td><span class="' . $label_class . '">' . $event_user['status'] . '</span></td>';
+            $html .= '<td><form class="change_status_form">
+                          <input type="hidden" name="event_id" value="' . $event_id . '">
+                          <input type="hidden" name="user_id" value="' . $user_id . '">
+                          <input type="hidden" name="action" value="change_status">
+                          <button type="button" class="btn btn-success btn-change-status confirm">Confirm</button>
+                          <button type="button" class="btn btn-danger btn-change-status decline">Decline</button>
+                      </form>';
+            $html .= '</td></tr>';
+    endforeach;
+    return $html;
+}
+function get_event_users(){
+    $event_id = $_POST['event_id']; 
+    $meta_key = 'event_users';
+    $event_users = get_post_meta( $event_id, $meta_key, true );
+    echo get_event_users_html($event_id, $event_users);
+    wp_die();
+}
+add_action('wp_ajax_get_event_users', 'get_event_users');
+
+function change_status(){
+    $event_id = $_POST['event_id'];
+    $user_id = $_POST['user_id'];
+    $change_to_status = $_POST['change_to_status'];
+    $meta_key = 'event_users';
+    $event_users = get_post_meta( $event_id, $meta_key, true );
+    $event_users[$user_id]['status'] = $change_to_status;
+    update_post_meta( $event_id, $meta_key, $event_users );
+    echo get_event_users_html($event_id, $event_users);
+    wp_die();
+}
+add_action('wp_ajax_change_status', 'change_status');
