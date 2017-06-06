@@ -17,7 +17,7 @@
                     $page = get_page_by_title("All Soirees");
                     $link_all_soiree_page = get_page_link($page->ID) 
                 ?>
-                <li class = ""><a href = "<?php echo $link_all_soiree_page; ?>">All-Soirees</a></li>
+                <li><a href = "<?php echo $link_all_soiree_page; ?>">All-Soirees</a></li>
             </ul>
         </div>
     </nav>

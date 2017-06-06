@@ -18,8 +18,13 @@
 				<div class="container">
 					<div class="row">
 						<div class="col-xs-12">	
-							<h1 class="page-title text-center"><?php if($current_date <= $last_date):?><a href="<?php echo get_home_url();?>"
-						<?php echo ">"; endif;?><?php echo get_the_title();?></a></h1>
+							<h1 class="page-title text-center">
+								<?php if($current_date <= $last_date):?>
+											<a href="<?php echo get_home_url();?>">
+									  <?php endif;?>
+												<?php echo get_the_title();?>
+											</a>
+							</h1>
 						</div>
 						<div class="col-xs-12 content text text-center">
 							<div><?php echo wpautop(get_the_content());?></div>
