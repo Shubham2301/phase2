@@ -20,7 +20,7 @@
 							<p class="fade" id="rsvp-response-text"></p>
 							<div class="row content text">
 								<div class="col-lg-12 text-center">
-									<div><?php echo get_the_content();?></div>
+									<div><?php echo wpautop(get_the_content());?></div>
 								</div>
 							</div>
 							<div class="row soiree_dates text">
@@ -37,6 +37,7 @@
 								<div class="col-md-4 rsvp text">
 									<p class="row link text-center">Already have a guest account?? RSVP HERE</p>
 									<form id="verification_form" class="text-left form-horizontal">
+											<input type="hidden" name="eventID" value="<?php the_ID(); ?>">
 											<input type="hidden" value="verify_credentials" name="action">
 											<label for="email">ENTER YOUR EMAIL</label>
 											<br>
