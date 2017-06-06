@@ -34,9 +34,9 @@
 								<div>Last Registration Date:</div>
 								<div><?php echo get_field('last_date');?></div>
 							</div>
-						</div>	
+						</div>
 					</div>
-				</div>		
+				</div>
 	<?php 
 			endwhile;
 		endif;
