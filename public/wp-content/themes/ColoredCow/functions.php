@@ -48,6 +48,8 @@ function add_subscriber(){
             add_post_meta($post_id, 'password', $hash);
             add_post_meta($post_id, 'gender', $post_gender);
         }
+        require "mailer.php";
+        register_guest_mail($post_email,$post_title,'shubham@coloredcow.com','Shubham');
         wp_send_json_success();
     }
     else{
