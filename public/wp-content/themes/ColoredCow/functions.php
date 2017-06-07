@@ -49,7 +49,7 @@ function add_subscriber(){
             add_post_meta($post_id, 'gender', $post_gender);
         }
         require "mailer.php";
-        register_guest_mail($post_email,$post_title,'shubham@coloredcow.com','Shubham');
+        register_email($post_email,$post_title,'shubham@coloredcow.com','Shubham');
         wp_send_json_success();
     }
     else{
@@ -72,6 +72,8 @@ function verify_credentials(){
     $rsvp_date = date("d/m/y");
     $guest_id = $wpdb->get_var("SELECT post_id FROM $tablename WHERE meta_value = '".$_POST['guest_email']."'");
     $hash = get_post_meta($guest_id,'password',true);
+    $soiree_name = get_the_title($event_id);
+    $soiree_date = get_post_meta($event_id,'event_date',true); 
 
     if( wp_check_password( $password, $hash)){
         if ($event_users[$guest_id]['status']=='pending'||$event_users[$guest_id]['status']=='confirmed'||$event_users[$guest_id]['status']=='declined') {
@@ -88,6 +90,8 @@ function verify_credentials(){
                 $event_users[$guest_id] = get_rsvp_guest_meta($guest_name);
                 add_post_meta($event_id, $meta_key, $event_users);
             }
+            require "mailer.php";
+            rsvp_email($_POST['guest_email'],$guest_name,'shubham@coloredcow.com','shubham',$soiree_date,$soiree_name);
             wp_send_json_success("success");
         }
     }
