@@ -77,6 +77,15 @@ Text Domain: coloredcow
         margin-top: 20px;
     }
     
+    .forward-button {
+        @extend .font-dancing-script;
+        margin-top: 60px;
+        label {
+            @extend .font-indie-flower;
+            font-size: 20px;
+        }
+    }
+    
     .register-form {
         margin-top: 40px;
         button {

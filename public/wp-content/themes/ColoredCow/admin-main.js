@@ -1,2 +1,2 @@
-/*! ColoredCow 2017-06-06 */
+/*! ColoredCow 2017-06-07 */
 jQuery(document).ready(function(){function a(){jQuery.ajax({url:PARAMS.ajaxurl,data:jQuery("#event_form_data").serialize(),method:"POST",success:function(a){jQuery("#event_users_table tbody").html(a)}})}function b(a,b){var c=a.serialize()+"&change_to_status="+b;jQuery.ajax({url:PARAMS.ajaxurl,data:c,method:"POST",success:function(a){jQuery("#event_users_table tbody").html(a)},error:function(){console.log("error")}})}a(),jQuery("#soiree-form-submit").on("click",function(){a()}),jQuery(".event_users_table").on("click",".btn-change-status",function(){var a=jQuery(this).closest("form");jQuery(this).hasClass("confirm")?b(a,"confirmed"):jQuery(this).hasClass("decline")&&b(a,"declined")})});

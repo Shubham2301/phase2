@@ -181,3 +181,17 @@ function change_status(){
     wp_die();
 }
 add_action('wp_ajax_change_status', 'change_status');
+
+function forward_email_to_friend()
+{
+    $event_id = $_POST['eventID'];
+    $soiree_name = get_the_title($event_id);
+    $soiree_date = get_post_meta($event_id,'event_date',true);
+    $soiree_link = get_home_url();
+    echo $soiree_link;
+    require "mailer.php";
+    share_with_friend($_POST['guest_name'],$_POST['guest_email'],$_POST['friend_name'],$_POST['friend_email'],$soiree_name,$soiree_date,$soiree_link);
+    wp_send_json_success("success");   
+}
+add_action('wp_ajax_share_with_friend', 'forward_email_to_friend');
+add_action('wp_ajax_nopriv_share_with_friend', 'forward_email_to_friend');

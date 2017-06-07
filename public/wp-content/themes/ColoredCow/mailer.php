@@ -4,17 +4,10 @@
  */
 
 require_once get_template_directory() . '/vendor/mandrill/mandrill/src/Mandrill.php';
-function register_email($guest_email,$guest_name,$host_email,$host_name)
-{   
+function register_email($guest_email,$guest_name,$host_email,$host_name){   
     try {
         $mandrill = new Mandrill('v0tqtpCwhDCIOLFe5Hw-gA');
         $template_name = 'WelcomeToSoiree';
-        $template_content = array(
-            array(
-                'name' => 'firstname',
-                'content' => $guest_name
-            )
-        );
         $message = array(
             'html' => '<p>Example HTML content</p>',
             'text' => 'Example text content',
@@ -50,17 +43,10 @@ function register_email($guest_email,$guest_name,$host_email,$host_name)
     }
 }
 
-function rsvp_email($guest_email,$guest_name,$host_email,$host_name,$soiree_date,$soiree_name)
-{   
+function rsvp_email($guest_email,$guest_name,$host_email,$host_name,$soiree_date,$soiree_name){   
     try {
         $mandrill = new Mandrill('v0tqtpCwhDCIOLFe5Hw-gA');
         $template_name = 'ThanksForRSVP';
-        // $template_content = array(
-        //     array(
-        //         'name' => 'first_name',
-        //         'content' => $guest_name
-        //     )
-        // );
         $message = array(
             'html' => '<p>Example HTML content</p>',
             'text' => 'Example text content',
@@ -90,6 +76,61 @@ function rsvp_email($guest_email,$guest_name,$host_email,$host_name,$soiree_date
                             'name' => 'soiree_date',
                             'content' => $soiree_date
                         ),
+                    )
+                )
+            ),
+        );
+        $result = $mandrill->messages->sendTemplate($template_name, $template_content, $message);
+        // var_dump($result);
+    } catch(Mandrill_Error $e) {
+        // Mandrill errors are thrown as exceptions
+        echo 'A mandrill error occurred: ' . get_class($e) . ' - ' . $e->getMessage();
+        // A mandrill error occurred: Mandrill_Unknown_Subaccount - No subaccount exists with the id 'customer-123'
+        throw $e;
+    }
+}
+
+function share_with_friend($guest_name,$guest_email,$friend_name,$friend_email,$soiree_name,$soiree_date,$soiree_link){
+    try {
+        $mandrill = new Mandrill('v0tqtpCwhDCIOLFe5Hw-gA');
+        $template_name = 'ShareWithFriend';
+        $message = array(
+            'html' => '<p>Example HTML content</p>',
+            'text' => 'Example text content',
+            'subject' => 'Thank You!!!',
+            'from_email' => $host_email,
+            'from_name' => $host_name,
+            'to' => array(
+                array(
+                    'email' => $friend_email,
+                    'name' => $friend_name,
+                    'type' => 'to'
+                )
+            ),
+            'merge_vars' => array(
+                array(
+                    'rcpt' => $friend_email,
+                    'vars' => array(
+                        array(
+                            'name' => 'friend_name',
+                            'content' => $friend_name
+                        ),
+                        array(
+                            'name' => 'guest_name',
+                            'content' => $guest_name
+                        ),
+                        array(
+                            'name' => 'soiree_name',
+                            'content' => $soiree_name
+                        ),
+                        array(
+                            'name' => 'soiree_date',
+                            'content' => $soiree_date
+                        ),
+                        array(
+                            'name' => 'link',
+                            'content' => $soiree_link
+                        )
                     )
                 )
             ),
