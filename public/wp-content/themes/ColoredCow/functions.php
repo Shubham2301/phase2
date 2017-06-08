@@ -11,6 +11,7 @@ if ( ! function_exists( 'cc_scripts' ) ) {
 
 if ( ! function_exists( 'cc_admin_scripts' ) ) {
     function cc_admin_scripts() {
+        wp_enqueue_style('cc-admin-bootstrap-css', get_template_directory_uri().'/dist/lib/css/bootstrap.min.css', '', '1.0.0');
         wp_enqueue_script('cc-admin-main', get_template_directory_uri().'/admin-main.js', array('jquery'), '1.0.0', true);
         wp_localize_script( 'cc-admin-main', 'PARAMS', array('ajaxurl' => admin_url('admin-ajax.php')) );
     }
@@ -68,30 +69,36 @@ function verify_credentials(){
     $meta_key = 'event_users';
     $event_users = get_post_meta( $event_id, $meta_key, true );
     $rsvp_date = date("d/m/y");
-    $guest_id = $wpdb->get_var("SELECT post_id FROM $tablename WHERE meta_value = '".$_POST['guest_email']."'");
-    $hash = get_post_meta($guest_id,'password',true);
+    $rsvp_guest_id = $wpdb->get_var("SELECT post_id FROM $tablename WHERE meta_value = '".$_POST['guest_email']."'");
+    $hash = get_post_meta($rsvp_guest_id,'password',true);
 
+       // foreach( $event_users as $guest_id => $event_user ):
+       //      if($rsvp_guest_id==$guest_id){
+       //          $counter = $counter+1;
+       //           wp_send_json_error("duplicate");
+       //      } 
+       //  endforeach;
     if( wp_check_password( $password, $hash)){
-        if ($event_users[$guest_id]['status']=='pending'||$event_users[$guest_id]['status']=='confirmed'||$event_users[$guest_id]['status']=='declined') {
+        if(array_key_exists($rsvp_guest_id,$event_users)){
             wp_send_json_error("duplicate");
         }
         else{
-            $meta_key = 'event_users';
             $event_users = get_post_meta( $event_id, $meta_key, true );
-            $guest_name = get_the_title( $guest_id );
+            $guest_name = get_the_title( $rsvp_guest_id );
             if($event_users){
-                $event_users[$guest_id] = get_rsvp_guest_meta( $guest_name );
+                $event_users[$rsvp_guest_id] = get_rsvp_guest_meta( $guest_name );
                 update_post_meta( $event_id, $meta_key, $event_users );
             } else {
-                $event_users[$guest_id] = get_rsvp_guest_meta($guest_name);
+                $event_users[$rsvp_guest_id] = get_rsvp_guest_meta($guest_name);
                 add_post_meta($event_id, $meta_key, $event_users);
             }
             wp_send_json_success("success");
         }
-    }
+            
+    } 
     else{
-       wp_send_json_error("failed");
-    }
+           wp_send_json_error("failed");
+        }  
 } 
 add_action('wp_ajax_verify_credentials','verify_credentials'); 
 add_action('wp_ajax_nopriv_verify_credentials','verify_credentials');
@@ -103,13 +110,13 @@ function check_duplicate_entry($event,$phone,$email){
     return $rowcount ? false : true;
 }
 
-add_action( 'admin_menu', 'wpdocs_register_my_custom_menu_page' );
+add_action( 'admin_menu', 'wpdocs_register_event_attendance_page' );
 
-function wpdocs_register_my_custom_menu_page() {
-    add_menu_page( 'Event Attendance','Event Attendance', 'manage_options', 'event-attendance', 'eventAttendancescreen' );
+function wpdocs_register_event_attendance_page() {
+    add_menu_page( 'Event Attendance','Event Attendance', 'manage_options', 'event-attendance', 'event_attendance_screen' );
 }
 
-function eventAttendancescreen() {
+function event_attendance_screen() {
     include "event_attendance.php";
 }
 
