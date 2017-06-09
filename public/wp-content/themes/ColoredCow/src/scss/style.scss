@@ -36,7 +36,7 @@ Text Domain: coloredcow
 }
 
 .page-title {
-    @extend .font-gloria-hallelujah;
+    @extend .font-radley;
     font-size: 40px;
     color: $black;
 }
@@ -59,15 +59,14 @@ Text Domain: coloredcow
 }
 
 .link {
-    @extend .font-indie-flower;
+    @extend .font-dancing-script;
     font-weight: bold;
     color: $black;
     margin-top: 40px;
 }
 
 .soiree_dates {
-    @extend .font-indie-flower;
-    font-weight: bold;
+    @extend .font-radley;
     font-size: 30px;
     color: $magenta;
 }
@@ -75,7 +74,7 @@ Text Domain: coloredcow
 .register-form {
     margin-top: 40px;
     button {
-        @extend .font-indie-flower;
+        @extend .font-dancing-script;
         font-size: 20px;
     }
     .gender {
@@ -87,21 +86,21 @@ Text Domain: coloredcow
 .field {
     margin-bottom: 15px;
     label {
-        @extend .font-indie-flower;
-        font-size: 20px;
+        @extend .font-dancing-script;
+        font-size: 18px;
     }
     .radio-gender {
-        @extend .font-indie-flower;
+        @extend .font-dancing-script;
         font-size: 18px;
     }
     input {
-        @extend .font-indie-flower;
+        @extend .font-dancing-script;
         font-size: 18px;
     }
 }
 
 .page-alerts {
-    @extend .font-gloria-hallelujah;
+    @extend .font-cabin-sketch;
     font-size: 25px;
 }
 

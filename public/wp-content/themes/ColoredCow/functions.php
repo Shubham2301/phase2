@@ -11,7 +11,7 @@ if ( ! function_exists( 'cc_scripts' ) ) {
 
 if ( ! function_exists( 'cc_styles' ) ) {
     function cc_styles() {  
-        wp_enqueue_style('et-googleFonts', 'https://fonts.googleapis.com/css?family=El+Messiri:400,700|Gloria+Hallelujah|Indie+Flower');
+        wp_enqueue_style('et-googleFonts', 'https://fonts.googleapis.com/css?family=El+Messiri:400,700|Cabin+Sketch|Radley');
         wp_enqueue_style('cc-bootstrap', get_template_directory_uri().'/dist/lib/css/bootstrap.min.css');
         wp_enqueue_style('style', get_template_directory_uri().'/style.css');
     }

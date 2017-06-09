@@ -57,6 +57,7 @@
 									 <a class="btn btn-primary btn-lg" role="button" href="<?php echo $link_register_page;?>" target="_blank">REGISTERING HERE</a>
 								</div>
 							</div>
+							<?php echo do_shortcode('[addtoany title="Home"]'); ?>
 				<?php
 						endwhile;
 					endif;
