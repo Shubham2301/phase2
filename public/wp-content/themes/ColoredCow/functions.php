@@ -63,6 +63,7 @@ add_action('wp_ajax_nopriv_add_subscriber', 'add_subscriber');
 
 function verify_credentials(){
     global $wpdb;
+    if(isset($_POST['password'])&&isset($_POST['eventID'])):
     $tablename = $wpdb->prefix.'postmeta';
     $password = $_POST['password'];
     $event_id = $_POST['eventID'];
@@ -72,33 +73,19 @@ function verify_credentials(){
     $rsvp_guest_id = $wpdb->get_var("SELECT post_id FROM $tablename WHERE meta_value = '".$_POST['guest_email']."'");
     $hash = get_post_meta($rsvp_guest_id,'password',true);
 
-       // foreach( $event_users as $guest_id => $event_user ):
-       //      if($rsvp_guest_id==$guest_id){
-       //          $counter = $counter+1;
-       //           wp_send_json_error("duplicate");
-       //      } 
-       //  endforeach;
-    if( wp_check_password( $password, $hash)){
-        if(array_key_exists($rsvp_guest_id,$event_users)){
-            wp_send_json_error("duplicate");
-        }
-        else{
-            $event_users = get_post_meta( $event_id, $meta_key, true );
-            $guest_name = get_the_title( $rsvp_guest_id );
-            if($event_users){
-                $event_users[$rsvp_guest_id] = get_rsvp_guest_meta( $guest_name );
-                update_post_meta( $event_id, $meta_key, $event_users );
-            } else {
-                $event_users[$rsvp_guest_id] = get_rsvp_guest_meta($guest_name);
-                add_post_meta($event_id, $meta_key, $event_users);
-            }
-            wp_send_json_success("success");
-        }
-            
-    } 
-    else{
-           wp_send_json_error("failed");
-        }  
+    if(!wp_check_password( $password, $hash)){
+        wp_send_json_error("failed");
+    }
+    if(array_key_exists($rsvp_guest_id,$event_users)){
+        wp_send_json_error("duplicate");
+    }
+    $event_users = get_post_meta( $event_id, $meta_key, true );
+    $guest_name = get_the_title( $rsvp_guest_id );
+    $event_users[$rsvp_guest_id] = get_rsvp_guest_meta( $guest_name );
+    $event_users ? update_post_meta( $event_id, $meta_key, $event_users ) : add_post_meta($event_id, $meta_key, $event_users);
+    wp_send_json_success("success");
+    endif;
+    wp_die();
 } 
 add_action('wp_ajax_verify_credentials','verify_credentials'); 
 add_action('wp_ajax_nopriv_verify_credentials','verify_credentials');
@@ -162,15 +149,18 @@ function get_event_users_html($event_id, $event_users){
     return $html;
 }
 function get_event_users(){
+    if(isset($_POST['event_id'])):
     $event_id = $_POST['event_id']; 
     $meta_key = 'event_users';
     $event_users = get_post_meta( $event_id, $meta_key, true );
     echo get_event_users_html($event_id, $event_users);
+    endif;
     wp_die();
 }
 add_action('wp_ajax_get_event_users', 'get_event_users');
 
 function change_status(){
+    if(isset($_POST['event_id'])&&isset($_POST['guest_id'])&&isset($_POST['change_to_status'])):
     $event_id = $_POST['event_id'];
     $guest_id = $_POST['guest_id'];
     $change_to_status = $_POST['change_to_status'];
@@ -179,6 +169,7 @@ function change_status(){
     $event_users[$guest_id]['status'] = $change_to_status;
     update_post_meta( $event_id, $meta_key, $event_users );
     echo get_event_users_html($event_id, $event_users);
+    endif;
     wp_die();
 }
 add_action('wp_ajax_change_status', 'change_status');
