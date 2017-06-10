@@ -1,20 +1,12 @@
-<?php
-/**
- * Template Name: Landing
- */
-?>
-
 <?php get_header(); ?>
 
-<div class="page-landing">
+<div class="page-sinf=gle-soiree">
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12 text-center">
 				<?php
-					$args = array('post_type' => 'soiree', 'posts_per_page' => 1);
-					$loop = new WP_Query( $args);
-					if($loop->have_posts()):
-						while ($loop->have_posts()) : $loop->the_post();
+					if(have_posts()):
+						while (have_posts()) : the_post();
 				?>
 							<h1 class="page-title"><?php echo get_the_title();?></h1>
 							<p class="fade" id="rsvp-response-text"></p>

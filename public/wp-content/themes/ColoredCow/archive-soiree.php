@@ -1,30 +1,21 @@
-<?php
-/**
- * Template Name: All-soirees
- */
-?>
-
 <?php get_header(); ?>
-<div class="all-soiree-page">
+<div class="archieve-soiree-page">
 	<?php
-		$args = array('post_type' => 'soiree', 'posts_per_page' => 10);
-		$loop = new WP_Query( $args);
-		// query_posts($args);
-		if($loop->have_posts()):
-			while ($loop->have_posts()) : $loop->the_post();
-			$last_date = get_field('last_date');
-			$current_date = date("Y-m-d");
+		if(have_posts()):
+			while (have_posts()) : the_post();
+			$last_date = strtotime(get_field('last_date'));
+			$current_date = strtotime(date("Y-m-d"));
 	?>			
 				<div class="container">
 					<div class="row">
-						<div class="col-xs-12">	
-							<h1 class="page-title text-center">
-								<?php if($current_date <= $last_date):?>
-											<a href="<?php echo get_home_url();?>">
-									  <?php endif;?>
-												<?php echo get_the_title();?>
-											</a>
-							</h1>
+						<div class="col-md-12">
+							<?php 
+								$soiree_link = '#';
+								if($current_date <= $last_date){
+									$soiree_link = get_the_permalink();
+								}
+							?>
+							<h1 class="page-title text-center"><a href="<?php echo $soiree_link; ?>"><?php echo get_the_title();?></a></h1>
 						</div>
 						<div class="col-xs-12 content text text-center">
 							<div><?php echo wpautop(get_the_content());?></div>
