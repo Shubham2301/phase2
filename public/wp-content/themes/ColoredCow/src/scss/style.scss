@@ -77,9 +77,14 @@ Text Domain: coloredcow
         @extend .font-dancing-script;
         font-size: 20px;
     }
-    .gender {
-        position: relative;
-        left: 18px;
+    .rsvp {
+        font-size: 22px;
+        font-weight: bold;
+        @extend .font-dancing-script;
+        color: $red;
+        label {
+            font-size: 16px;
+        }
     }
 }
 
