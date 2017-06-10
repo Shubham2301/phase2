@@ -5,8 +5,6 @@
 		<div class="row">
 			<div class="col-md-12 text-center">
 				<?php
-					//$args = array('post_type' => 'soiree', 'posts_per_page' => 1);
-					// $loop = new WP_Query( $args);
 					if(have_posts()):
 						while (have_posts()) : the_post();
 				?>
@@ -14,7 +12,7 @@
 							<p class="fade" id="rsvp-response-text"></p>
 							<div class="row content text">
 								<div class="col-lg-12 text-center">
-									<div><?php echo get_the_content();?></div>
+									<div><?php echo wpautop(get_the_content());?></div>
 								</div>
 							</div>
 							<div class="row soiree_dates text">
@@ -51,7 +49,7 @@
 									 <a class="btn btn-primary btn-lg" role="button" href="<?php echo $link_register_page;?>" target="_blank">REGISTERING HERE</a>
 								</div>
 							</div>
-							<?php echo do_shortcode('[addtoany title="Home"]'); ?>
+							<?php echo do_shortcode('[addtoany]'); ?>
 				<?php
 						endwhile;
 					endif;
