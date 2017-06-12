@@ -1,4 +1,4 @@
-module.exports = function (grunt) {
+module.exports = function(grunt) {
 
     // Project configuration.
 
@@ -16,9 +16,15 @@ module.exports = function (grunt) {
 
             build: {
 
-                src: 'src/js/*.js',
+                files: [{
 
-                dest: 'main.js'
+                    expand: true,
+
+                    src: '*.js',
+
+                    cwd: 'src/js'
+
+                }]
 
             }
 
@@ -50,11 +56,11 @@ module.exports = function (grunt) {
 
                 files: [
 
-          'src/js/*.js',
+                    'src/js/*.js',
 
-          'src/scss/*.scss',
+                    'src/scss/*.scss',
 
-        ],
+                ],
 
                 tasks: ['default'],
 
