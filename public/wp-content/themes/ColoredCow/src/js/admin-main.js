@@ -32,8 +32,8 @@ jQuery(document).ready(function() {
             success: function(res) {
                 jQuery('#event_users_table tbody').html(res);
             },
-            error: function() {
-                console.log("error");
+            error: function(request, status, error) {
+                console.log(error);
             }
         });
     }

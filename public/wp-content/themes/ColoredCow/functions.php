@@ -36,7 +36,7 @@ function add_subscriber(){
     $post_password= $_POST['password'];
     $post_gender= $_POST['gender'];
     $hash = wp_hash_password( $post_password );
-    if(check_duplicate_entry($post_event_id,$post_phone,$post_email)==true){
+    if(check_duplicate_entry($post_phone,$post_email)==true){
         $my_post = array(
           'post_title'    => $post_title,
           'post_status'   => 'publish',
@@ -55,42 +55,39 @@ function add_subscriber(){
         wp_send_json_error();
     }
 }
-
 add_action('wp_ajax_add_subscriber', 'add_subscriber');
 add_action('wp_ajax_nopriv_add_subscriber', 'add_subscriber');
-
-
 
 function verify_credentials(){
     global $wpdb;
     if(isset($_POST['password'])&&isset($_POST['eventID'])):
-    $tablename = $wpdb->prefix.'postmeta';
-    $password = $_POST['password'];
-    $event_id = $_POST['eventID'];
-    $meta_key = 'event_users';
-    $event_users = get_post_meta( $event_id, $meta_key, true );
-    $rsvp_date = date("d/m/y");
-    $rsvp_guest_id = $wpdb->get_var("SELECT post_id FROM $tablename WHERE meta_value = '".$_POST['guest_email']."'");
-    $hash = get_post_meta($rsvp_guest_id,'password',true);
+        $tablename = $wpdb->prefix.'postmeta';
+        $password = $_POST['password'];
+        $event_id = $_POST['eventID'];
+        $meta_key = 'event_users';
+        $event_users = get_post_meta( $event_id, $meta_key, true );
+        $rsvp_date = date("d/m/y");
+        $rsvp_guest_id = $wpdb->get_var("SELECT post_id FROM $tablename WHERE meta_value = '".$_POST['guest_email']."'");
+        $hash = get_post_meta($rsvp_guest_id,'password',true);
 
-    if(!wp_check_password( $password, $hash)){
-        wp_send_json_error("failed");
-    }
-    if(array_key_exists($rsvp_guest_id,$event_users)){
-        wp_send_json_error("duplicate");
-    }
-    $event_users = get_post_meta( $event_id, $meta_key, true );
-    $guest_name = get_the_title( $rsvp_guest_id );
-    $event_users[$rsvp_guest_id] = get_rsvp_guest_meta( $guest_name );
-    $event_users ? update_post_meta( $event_id, $meta_key, $event_users ) : add_post_meta($event_id, $meta_key, $event_users);
-    wp_send_json_success("success");
+        if(!wp_check_password( $password, $hash)){
+            wp_send_json_error("failed");
+        }
+        if(array_key_exists($rsvp_guest_id,$event_users)){
+            wp_send_json_error("duplicate");
+        }
+        $event_users = get_post_meta( $event_id, $meta_key, true );
+        $guest_name = get_the_title( $rsvp_guest_id );
+        $event_users[$rsvp_guest_id] = get_rsvp_guest_meta( $guest_name );
+        $event_users ? update_post_meta( $event_id, $meta_key, $event_users ) : add_post_meta($event_id, $meta_key, $event_users);
+        wp_send_json_success("success");
     endif;
     wp_die();
 } 
 add_action('wp_ajax_verify_credentials','verify_credentials'); 
 add_action('wp_ajax_nopriv_verify_credentials','verify_credentials');
 
-function check_duplicate_entry($event,$phone,$email){
+function check_duplicate_entry($phone,$email){
     global $wpdb;
     $tablename = $wpdb->prefix."postmeta";
     $rowcount = $wpdb->get_var("SELECT COUNT(*) FROM $tablename WHERE meta_value = '".$phone."'OR meta_value = '".$email."'");
@@ -150,10 +147,10 @@ function get_event_users_html($event_id, $event_users){
 }
 function get_event_users(){
     if(isset($_POST['event_id'])):
-    $event_id = $_POST['event_id']; 
-    $meta_key = 'event_users';
-    $event_users = get_post_meta( $event_id, $meta_key, true );
-    echo get_event_users_html($event_id, $event_users);
+        $event_id = $_POST['event_id']; 
+        $meta_key = 'event_users';
+        $event_users = get_post_meta( $event_id, $meta_key, true );
+        echo get_event_users_html($event_id, $event_users);
     endif;
     wp_die();
 }
@@ -161,14 +158,15 @@ add_action('wp_ajax_get_event_users', 'get_event_users');
 
 function change_status(){
     if(isset($_POST['event_id'])&&isset($_POST['guest_id'])&&isset($_POST['change_to_status'])):
-    $event_id = $_POST['event_id'];
-    $guest_id = $_POST['guest_id'];
-    $change_to_status = $_POST['change_to_status'];
-    $meta_key = 'event_users';
-    $event_users = get_post_meta( $event_id, $meta_key, true );
-    $event_users[$guest_id]['status'] = $change_to_status;
-    update_post_meta( $event_id, $meta_key, $event_users );
-    echo get_event_users_html($event_id, $event_users);
+        $event_id = $_POST['event_id'];
+        $guest_id = $_POST['guest_id'];
+        $change_to_status = $_POST['change_to_status'];
+        $meta_key = 'event_users';
+        $event_users = get_post_meta( $event_id, $meta_key, true );
+        $event_users[$guest_id]['status'] = $change_to_status;
+        update_post_meta( $event_id, $meta_key, $event_users );
+        echo get_event_users_html( $event_id, $event_users );
+        throw "data.error.msg";
     endif;
     wp_die();
 }
