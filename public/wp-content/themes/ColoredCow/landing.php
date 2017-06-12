@@ -37,6 +37,7 @@
 								<div class="col-md-4 rsvp text">
 									<p class="row link text-center">Already have a guest account?? RSVP HERE</p>
 									<form id="verification_form" class="text-left form-horizontal">
+											<input type="hidden" name="eventID" value="<?php the_ID(); ?>">
 											<input type="hidden" value="verify_credentials" name="action">
 											<label for="email">ENTER YOUR EMAIL</label>
 											<br>
