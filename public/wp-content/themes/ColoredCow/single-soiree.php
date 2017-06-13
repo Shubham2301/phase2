@@ -1,24 +1,14 @@
-<?php
-/**
- * Template Name: Landing
- */
-?>
-
 <?php get_header(); ?>
 
-<div class="page-landing">
+<div class="page-sinf=gle-soiree">
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12 text-center">
 				<?php
-					$args = array('post_type' => 'soiree', 'posts_per_page' => 1);
-					$loop = new WP_Query( $args);
-        			var_dump(get_option('admin_email'));
-
-					if($loop->have_posts()):
-						while ($loop->have_posts()) : $loop->the_post();
+					if(have_posts()):
+						while (have_posts()) : the_post();
 				?>
-							<h1 class="page-title"><?php echo get_the_title();?></h1>
+							<h1 class="page-title"><?php echo get_the_title();get_option('admin_email');?></h1>
 							<p class="fade" id="rsvp-response-text"></p>
 							<div class="row content text">
 								<div class="col-lg-12 text-center">
@@ -39,7 +29,6 @@
 								<div class="col-md-4 rsvp text">
 									<p class="row link text-center">Already have a guest account?? RSVP HERE</p>
 									<form id="verification_form" class="text-left form-horizontal">
-											<input type="hidden" name="eventID" value="<?php the_ID(); ?>">
 											<input type="hidden" value="verify_credentials" name="action">
 											<label for="email">ENTER YOUR EMAIL</label>
 											<br>
@@ -60,6 +49,7 @@
 									 <a class="btn btn-primary btn-lg" role="button" href="<?php echo $link_register_page;?>" target="_blank">REGISTERING HERE</a>
 								</div>
 							</div>
+							<?php echo do_shortcode('[addtoany]'); ?>
 				<?php
 						endwhile;
 					endif;

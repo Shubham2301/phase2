@@ -1,4 +1,5 @@
 <?php 
+require_once "mailer.php";
 
 if ( ! function_exists( 'cc_scripts' ) ) {
     function cc_scripts() {
@@ -37,6 +38,7 @@ function add_subscriber(){
     $post_gender= $_POST['gender'];
     $hash = wp_hash_password( $post_password );
     if(check_duplicate_entry($post_phone,$post_email)==true){
+        $host_email = get_option('admin_email');
         $my_post = array(
           'post_title'    => $post_title,
           'post_status'   => 'publish',
@@ -49,8 +51,7 @@ function add_subscriber(){
             add_post_meta($post_id, 'password', $hash);
             add_post_meta($post_id, 'gender', $post_gender);
         }
-        require "mailer.php";
-        register_email($post_email,$post_title,'shubham@coloredcow.com','Shubham');
+        register_email($post_email,$post_title,$host_email,'Shubham');
         wp_send_json_success();
     }
     else{
@@ -69,9 +70,15 @@ function verify_credentials(){
         $meta_key = 'event_users';
         $event_users = get_post_meta( $event_id, $meta_key, true );
         $rsvp_date = date("d/m/y");
-        $rsvp_guest_id = $wpdb->get_var("SELECT post_id FROM $tablename WHERE meta_value = '".$_POST['guest_email']."'");
+        $guest_email = $_POST['guest_email'];
+        $rsvp_guest_id = $wpdb->get_var("SELECT post_id FROM $tablename WHERE meta_value = '".$guest_email."'");
         $hash = get_post_meta($rsvp_guest_id,'password',true);
-
+        $guest_name = get_the_title($rsvp_guest_id);
+        $soiree_name = get_the_title($event_id);
+        $soiree_date = get_post_meta($event_id,'event_date',true);
+        // $host_name = get_option('display_name');
+        $host_email = get_option('admin_email');
+        var_dump($host_email);
         if(!wp_check_password( $password, $hash)){
             wp_send_json_error("failed");
         }
@@ -82,6 +89,7 @@ function verify_credentials(){
         $guest_name = get_the_title( $rsvp_guest_id );
         $event_users[$rsvp_guest_id] = get_rsvp_guest_meta( $guest_name );
         $event_users ? update_post_meta( $event_id, $meta_key, $event_users ) : add_post_meta($event_id, $meta_key, $event_users);
+        rsvp_email($guest_email,$guest_name,$host_email,'shubham',$soiree_date,$soiree_name);
         wp_send_json_success("success");
     endif;
     wp_die();
@@ -96,11 +104,10 @@ function check_duplicate_entry($phone,$email){
     return $rowcount ? false : true;
 }
 
-add_action( 'admin_menu', 'wpdocs_register_event_attendance_page' );
-
 function wpdocs_register_event_attendance_page() {
     add_menu_page( 'Event Attendance','Event Attendance', 'manage_options', 'event-attendance', 'event_attendance_screen' );
 }
+add_action( 'admin_menu', 'wpdocs_register_event_attendance_page' );
 
 function event_attendance_screen() {
     include "event_attendance.php";
