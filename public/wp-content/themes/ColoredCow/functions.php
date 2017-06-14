@@ -37,24 +37,41 @@ function add_subscriber(){
     $post_password= $_POST['password'];
     $post_gender= $_POST['gender'];
     $hash = wp_hash_password( $post_password );
-    if(check_duplicate_entry($post_phone,$post_email)==true){
-        $host_email = get_option('admin_email');
+    if( check_duplicate_entry($post_phone,$post_email) == true ){
         $my_post = array(
           'post_title'    => $post_title,
           'post_status'   => 'publish',
           'post_type'     => 'guest'
          ); 
         $post_id = wp_insert_post( $my_post );
-        if('$post_id'){
-            add_post_meta($post_id, 'phone', $post_phone);
-            add_post_meta($post_id, 'email', $post_email);
-            add_post_meta($post_id, 'password', $hash);
-            add_post_meta($post_id, 'gender', $post_gender);
+
+        if( !$post_id ){
+            wp_send_json_error();
         }
-        register_email($post_email,$post_title,$host_email,'Shubham');
+
+        add_post_meta($post_id, 'phone', $post_phone);
+        add_post_meta($post_id, 'email', $post_email);
+        add_post_meta($post_id, 'password', $hash);
+        add_post_meta($post_id, 'gender', $post_gender);
+
+        // send register email
+        $mailer = new Mailer();
+        $host_name = "Shubham";
+        $mailer->set_template( 'WelcomeToSoiree' );
+        $mailer->set_mail_subject( 'Welcome to ColoredCow Soiree' );
+        $mailer->set_host( array( 'email' => get_option('admin_email'), 'name' => $host_name ) );
+        $mail_recipients = array(
+                array( 'email' => $post_email, 'name' => $post_title )
+            );
+        $mailer->set_recipients( $mail_recipients );
+        $merge_vars = array(
+                $post_email => array( 'first_name' => $post_title )
+            );
+        $mailer->set_merge_vars( $merge_vars );
+        $mailer->send_mail_template();
         wp_send_json_success();
-    }
-    else{
+
+    } else{
         wp_send_json_error();
     }
 }
