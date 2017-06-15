@@ -13,8 +13,6 @@
 				<?php
 					$args = array('post_type' => 'soiree', 'posts_per_page' => 1);
 					$loop = new WP_Query( $args);
-        			var_dump(get_option('admin_email'));
-
 					if($loop->have_posts()):
 						while ($loop->have_posts()) : $loop->the_post();
 				?>

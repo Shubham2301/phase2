@@ -1,6 +1,7 @@
 <?php
 
 require_once get_template_directory() . '/vendor/mandrill/mandrill/src/Mandrill.php';
+// require_once __DIR__ . '/../../plugins/wpmandrill/lib/mandrill.class.php';
 
 class Mailer
 {
@@ -76,8 +77,8 @@ class Mailer
     {
         $formatted_merge_vars = array();
         foreach( $merge_vars as $rcpt => $merge_var )
-        {
-            $rcpt_merge_var = array( 'rcpt' => $rcpt );
+            {
+                $rcpt_merge_var = array( 'rcpt' => $rcpt );
             $vars = array();
             foreach( $merge_var as $key => $value )
             {
