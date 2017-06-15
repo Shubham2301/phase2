@@ -52,10 +52,13 @@ function add_subscriber(){
         add_post_meta($post_id, 'email', $post_email);
         add_post_meta($post_id, 'password', $hash);
         add_post_meta($post_id, 'gender', $post_gender);
+        $host_info = get_userdata(get_current_user_id());
+        $host_name = $host_info->first_name;
+        // var_dump($host_name);
+        // wp_die();
 
         // send register email
         $mailer = new Mailer();
-        $host_name = "Shubham";
         $mailer->set_template( 'WelcomeToSoiree' );
         $mailer->set_mail_subject( 'Welcome to ColoredCow Soiree' );
         $mailer->set_host( array( 'email' => get_option('admin_email'), 'name' => $host_name ) );
@@ -92,9 +95,9 @@ function verify_credentials(){
         $guest_name = get_the_title($rsvp_guest_id);
         $soiree_name = get_the_title($event_id);
         $soiree_date = get_post_meta($event_id,'event_date',true);
-        // $host_name = get_option('display_name');
+        $host_info = get_userdata(get_current_user_id());
+        $host_name = $host_info->first_name;
         $host_email = get_option('admin_email');
-        // var_dump($host_email);
         if(!wp_check_password( $password, $hash)){
             wp_send_json_error("failed");
         }
@@ -106,7 +109,6 @@ function verify_credentials(){
         $event_users ? update_post_meta( $event_id, $meta_key, $event_users ) : add_post_meta($event_id, $meta_key, $event_users);
         // rsvp mail
         $mailer = new Mailer();
-        $host_name = "Shubham";
         $mailer->set_template( 'ThanksForRSVP' );
         $mailer->set_mail_subject( 'Thank you for your response' );
         $mailer->set_host( array( 'email' => get_option('admin_email'), 'name' => $host_name ) );
