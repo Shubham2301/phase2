@@ -49,8 +49,8 @@ jQuery(document).ready(function() {
                     showRSVPErrorAlert();
                 }
             },
-            error: function() {
-                window.alert("some error occured!! contact the administrator");
+            error: function(request, status, error) {
+                console.log(error);
             }
         });
     }
