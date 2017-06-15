@@ -1,7 +1,7 @@
 <?php
 
-require_once get_template_directory() . '/vendor/mandrill/mandrill/src/Mandrill.php';
-// require_once __DIR__ . '/../../plugins/wpmandrill/lib/mandrill.class.php';
+// require_once get_template_directory() . '/vendor/mandrill/mandrill/src/Mandrill.php';
+require_once __DIR__ . '/../../plugins/wpmandrill/lib/mandrill.class.php';
 
 class Mailer
 {
@@ -93,7 +93,8 @@ class Mailer
     function send_mail_template()
     {
         try{
-            return $this->mandrill->messages->sendTemplate( $this->get_template(), '', $this->get_message() );
+            // return "done";
+            return $this->mandrill->messages_send_template( $this->get_template(), '', $this->get_message() );
         } catch(Mandrill_Error $err) {
             echo 'A mandrill error occurred: ' . get_class($err) . ' - ' . $err->getMessage();
             throw $err;
