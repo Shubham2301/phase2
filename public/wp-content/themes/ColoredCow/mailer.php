@@ -76,8 +76,8 @@ class Mailer
     {
         $formatted_merge_vars = array();
         foreach( $merge_vars as $rcpt => $merge_var )
-            {
-                $rcpt_merge_var = array( 'rcpt' => $rcpt );
+        {
+            $rcpt_merge_var = array( 'rcpt' => $rcpt );
             $vars = array();
             foreach( $merge_var as $key => $value )
             {
