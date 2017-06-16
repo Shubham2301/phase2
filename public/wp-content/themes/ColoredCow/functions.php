@@ -94,7 +94,6 @@ function verify_credentials(){
         $soiree_date = get_post_meta($event_id,'event_date',true);
         // $host_name = get_option('display_name');
         $host_email = get_option('admin_email');
-        // var_dump($host_email);
         if(!wp_check_password( $password, $hash)){
             wp_send_json_error("failed");
         }
@@ -104,6 +103,7 @@ function verify_credentials(){
         $event_users = get_post_meta( $event_id, $meta_key, true );
         $event_users[$rsvp_guest_id] = get_rsvp_guest_meta( $guest_name );
         $event_users ? update_post_meta( $event_id, $meta_key, $event_users ) : add_post_meta($event_id, $meta_key, $event_users);
+
         // rsvp mail
         $mailer = new Mailer();
         $host_name = "Shubham";
@@ -215,10 +215,26 @@ function forward_email_to_friend()
     $soiree_name = get_the_title($event_id);
     $soiree_date = get_post_meta($event_id,'event_date',true);
     $soiree_link = get_home_url();
-    echo $soiree_link;
-    require "mailer.php";
-    share_with_friend($_POST['guest_name'],$_POST['guest_email'],$_POST['friend_name'],$_POST['friend_email'],$soiree_name,$soiree_date,$soiree_link);
+    $friend_email =  $_POST['friend_email'];
+    $friend_name = $_POST['friend_name'];
+    // echo $soiree_link;
+    // require "mailer.php";
+    // share_with_friend($_POST['guest_name'],$_POST['guest_email'],$_POST['friend_name'],$_POST['friend_email'],$soiree_name,$soiree_date,$soiree_link);
+    $mailer = new Mailer();
+    $host_name = "Shubham";
+    $mailer->set_template( 'ShareWithFriend' );
+    $mailer->set_mail_subject( 'Your Friend wants you to see this' );
+    $mailer->set_host( array( 'email' => get_option('admin_email'), 'name' => $host_name ) );
+    $mail_recipients = array(
+            array( 'email' => $friend_email, 'name' => $friend_name )
+        );
+    $mailer->set_recipients( $mail_recipients );
+    $merge_vars = array(
+            $friend_email => array('friend_name' => $friend_name, 'guest_name' => $_POST['guest_name'], 'soiree_name' => $soiree_name, 'soiree_date' => $soiree_date, 'link' => $soiree_link )
+        );
+    $mailer->set_merge_vars( $merge_vars );
+    $mailer->send_mail_template();
     wp_send_json_success("success");   
 }
 add_action('wp_ajax_share_with_friend', 'forward_email_to_friend');
-add_action('wp_ajax_nopriv_share_with_friend', 'forward_email_to_friend');
+// add_action('wp_ajax_nopriv_share_with_friend', 'forward_email_to_friend');
