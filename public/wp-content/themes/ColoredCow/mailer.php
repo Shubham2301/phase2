@@ -1,7 +1,7 @@
 <?php
 
-require_once __DIR__ . '/../../plugins/wpmandrill/lib/mandrill.class.php';
-
+// require_once __DIR__ . '/../../plugins/wpmandrill/lib/mandrill.class.php';
+require_once 'WP_PLUGIN_DIR . "/../../wpmandrill/lib/mandrill.class.php"';
 class Mailer
 {
     protected $template;

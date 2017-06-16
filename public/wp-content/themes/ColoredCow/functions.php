@@ -203,7 +203,6 @@ function change_status(){
         $event_users[$guest_id]['status'] = $change_to_status;
         update_post_meta( $event_id, $meta_key, $event_users );
         echo get_event_users_html( $event_id, $event_users );
-        throw "data.error.msg";
     endif;
     wp_die();
 }
