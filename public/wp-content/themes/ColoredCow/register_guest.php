@@ -5,10 +5,7 @@
 ?>
 
 <?php get_header(); ?>
-<?php
-	// lets_send_mail();
 
-?>
 <div class="guest-register-page">
 	<div class="container">
 		<div class="row">
