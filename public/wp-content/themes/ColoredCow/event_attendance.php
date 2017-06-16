@@ -31,7 +31,7 @@
 								<th>RSVP Date</th>
 								<th>status</th>
 								<th>Action</th>
-							</tr>	
+							</tr>
 						</thead>
 						<tbody></tbody>
 					</table>

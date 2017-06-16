@@ -1,4 +1,5 @@
 <?php 
+require_once "mailer.php";
 
 if ( ! function_exists( 'cc_scripts' ) ) {
     function cc_scripts() {
@@ -30,28 +31,47 @@ if ( ! function_exists( 'cc_styles' ) ) {
 add_filter('show_admin_bar','__return_false');
 
 function add_subscriber(){
-    $post_title = $_POST['name'];
+    $guest_name = $_POST['name'];
     $post_phone = $_POST['phone'];
     $post_email = $_POST['email'];
     $post_password= $_POST['password'];
     $post_gender= $_POST['gender'];
     $hash = wp_hash_password( $post_password );
-    if(check_duplicate_entry($post_phone,$post_email)==true){
+    if( check_duplicate_entry($post_phone,$post_email) == true ){
         $my_post = array(
-          'post_title'    => $post_title,
+          'post_title'    => $guest_name,
           'post_status'   => 'publish',
           'post_type'     => 'guest'
-         ); 
+         );
         $post_id = wp_insert_post( $my_post );
-        if('$post_id'){
-            add_post_meta($post_id, 'phone', $post_phone);
-            add_post_meta($post_id, 'email', $post_email);
-            add_post_meta($post_id, 'password', $hash);
-            add_post_meta($post_id, 'gender', $post_gender);
+        if( !$post_id ){
+            wp_send_json_error();
         }
+
+        add_post_meta($post_id, 'phone', $post_phone);
+        add_post_meta($post_id, 'email', $post_email);
+        add_post_meta($post_id, 'password', $hash);
+        add_post_meta($post_id, 'gender', $post_gender);
+        $host_email = get_option('admin_email');
+        $the_host = get_user_by('email', "$host_email");
+        $host_info = get_userdata($the_host->ID);
+        $host_name = $host_info->first_name;
+        $mailer = new Mailer();
+        $mailer->set_template( 'WelcomeToSoiree' );
+        $mailer->set_mail_subject( 'Welcome to ColoredCow Soiree' );
+        $mailer->set_host( array( 'email' => $host_email, 'name' => $host_name ) );
+        $mail_recipients = array(
+                array( 'email' => $post_email, 'name' => $guest_name )
+            );
+        $mailer->set_recipients( $mail_recipients );
+        $merge_vars = array(
+                $post_email => array( 'first_name' => $guest_name )
+            );
+        $mailer->set_merge_vars( $merge_vars );
+        $mailer->send_mail_template();
         wp_send_json_success();
-    }
-    else{
+
+    } else{
         wp_send_json_error();
     }
 }
@@ -67,9 +87,16 @@ function verify_credentials(){
         $meta_key = 'event_users';
         $event_users = get_post_meta( $event_id, $meta_key, true );
         $rsvp_date = date("d/m/y");
-        $rsvp_guest_id = $wpdb->get_var("SELECT post_id FROM $tablename WHERE meta_value = '".$_POST['guest_email']."'");
+        $guest_email = $_POST['guest_email'];
+        $rsvp_guest_id = $wpdb->get_var("SELECT post_id FROM $tablename WHERE meta_value = '".$guest_email."'");
         $hash = get_post_meta($rsvp_guest_id,'password',true);
-
+        $guest_name = get_the_title($rsvp_guest_id);
+        $soiree_name = get_the_title($event_id);
+        $soiree_date = get_post_meta($event_id,'event_date',true);
+        $host_email = get_option('admin_email');
+        $the_host = get_user_by('email', "$host_email");
+        $host_info = get_userdata($the_host->ID);
+        $host_name = $host_info->first_name;
         if(!wp_check_password( $password, $hash)){
             wp_send_json_error("failed");
         }
@@ -77,12 +104,23 @@ function verify_credentials(){
             wp_send_json_error("duplicate");
         }
         $event_users = get_post_meta( $event_id, $meta_key, true );
-        $guest_name = get_the_title( $rsvp_guest_id );
         $event_users[$rsvp_guest_id] = get_rsvp_guest_meta( $guest_name );
         $event_users ? update_post_meta( $event_id, $meta_key, $event_users ) : add_post_meta($event_id, $meta_key, $event_users);
+        $mailer = new Mailer();
+        $mailer->set_template( 'ThanksForRSVP' );
+        $mailer->set_mail_subject( 'Thank you for your response' );
+        $mailer->set_host( array( 'email' => $host_email, 'name' => $host_name ) );
+        $mail_recipients = array(
+                array( 'email' => $guest_email, 'name' => $guest_name )
+            );
+        $mailer->set_recipients( $mail_recipients );
+        $merge_vars = array(
+                $guest_email => array( 'first_name' => $guest_name, 'soiree_name' => $soiree_name, 'soiree_date' => $soiree_date )
+            );
+        $mailer->set_merge_vars( $merge_vars );
+        $mailer->send_mail_template();
         wp_send_json_success("success");
     endif;
-    wp_die();
 } 
 add_action('wp_ajax_verify_credentials','verify_credentials'); 
 add_action('wp_ajax_nopriv_verify_credentials','verify_credentials');
@@ -94,11 +132,10 @@ function check_duplicate_entry($phone,$email){
     return $rowcount ? false : true;
 }
 
-add_action( 'admin_menu', 'wpdocs_register_event_attendance_page' );
-
 function wpdocs_register_event_attendance_page() {
     add_menu_page( 'Event Attendance','Event Attendance', 'manage_options', 'event-attendance', 'event_attendance_screen' );
 }
+add_action( 'admin_menu', 'wpdocs_register_event_attendance_page' );
 
 function event_attendance_screen() {
     include "event_attendance.php";
@@ -166,7 +203,6 @@ function change_status(){
         $event_users[$guest_id]['status'] = $change_to_status;
         update_post_meta( $event_id, $meta_key, $event_users );
         echo get_event_users_html( $event_id, $event_users );
-        throw "data.error.msg";
     endif;
     wp_die();
 }
