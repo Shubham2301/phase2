@@ -6,11 +6,6 @@
 
 <?php get_header(); ?>
 
-  <?php 
-  	// $path = plugin_dir_path("wpmandrill.php"); 
-  	$path = WP_PLUGIN_DIR . "/wpmandrill/lib/mandrill.class.php"; 
-	var_dump($path);
-	?>
 <div class="page-landing">
 	<div class="container">
 		<div class="row">
