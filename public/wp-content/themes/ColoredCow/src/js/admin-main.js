@@ -1,20 +1,15 @@
     jQuery(document).ready(function() {
-        // console.log("abcd");
         update_guests_table();
-        // console.log("in admin-main");
         jQuery('#soiree-form-submit').on('click', function() {
-            console.log("button clicked");
             update_guests_table();
         });
 
         function update_guests_table() {
-            console.log("updateGuestTable");
             jQuery.ajax({
                 url: PARAMS.ajaxurl,
                 data: jQuery('#event_form_data').serialize(),
                 method: 'POST',
                 success: function(res) {
-                    console.log(res);
                     jQuery('#event_users_table tbody').html(res);
                 }
             });
