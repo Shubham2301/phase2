@@ -85,7 +85,7 @@ function verify_credentials(){
         $password = $_POST['password'];
         $event_id = $_POST['eventID'];
         $meta_key = 'event_users';
-        $event_users = get_post_meta( $event_id, $meta_key, true );
+        $event_users = get_post_meta( $event_id, $meta_key, false );
         $rsvp_date = date("d/m/y");
         $guest_email = $_POST['guest_email'];
         $rsvp_guest_id = $wpdb->get_var("SELECT post_id FROM $tablename WHERE meta_value = '".$guest_email."'");
@@ -103,9 +103,10 @@ function verify_credentials(){
         if(array_key_exists($rsvp_guest_id,$event_users)){
             wp_send_json_error("duplicate");
         }
-        $event_users = get_post_meta( $event_id, $meta_key, true );
         $event_users[$rsvp_guest_id] = get_rsvp_guest_meta( $guest_name );
         $event_users ? update_post_meta( $event_id, $meta_key, $event_users ) : add_post_meta($event_id, $meta_key, $event_users);
+        var_dump($event_users);
+        die();
         $mailer = new Mailer();
         $mailer->set_template( 'ThanksForRSVP' );
         $mailer->set_mail_subject( 'Thank you for your response' );
@@ -179,6 +180,7 @@ function get_event_users_html($event_id, $event_users){
                           <button type="button" class="btn btn-danger btn-change-status decline">Decline</button>
                       </form>';
             $html .= '</td></tr>';
+            var_dump("abcd");
     endforeach;
     return $html;
 }
@@ -207,3 +209,33 @@ function change_status(){
     wp_die();
 }
 add_action('wp_ajax_change_status', 'change_status');
+
+function forward_email_to_friend()
+{
+    $event_id = $_POST['eventID'];
+    $soiree_name = get_the_title($event_id);
+    $soiree_date = get_post_meta($event_id,'event_date',true);
+    $soiree_link = get_home_url();
+    $friend_email =  $_POST['friend_email'];
+    $friend_name = $_POST['friend_name'];
+    $mailer = new Mailer();
+    $host_email = get_option('admin_email');
+    $the_host = get_user_by('email', "$host_email");
+    $host_info = get_userdata($the_host->ID);
+    $host_name = $host_info->first_name;
+    $mailer->set_template( 'ShareWithFriend' );
+    $mailer->set_mail_subject( 'Your Friend wants you to see this' );
+    $mailer->set_host( array( 'email' => $host_email, 'name' => $host_name ) );
+    $mail_recipients = array(
+            array( 'email' => $friend_email, 'name' => $friend_name )
+        );
+    $mailer->set_recipients( $mail_recipients );
+    $merge_vars = array(
+            $friend_email => array('friend_name' => $friend_name, 'guest_name' => $_POST['guest_name'], 'soiree_name' => $soiree_name, 'soiree_date' => $soiree_date, 'link' => $soiree_link )
+        );
+    $mailer->set_merge_vars( $merge_vars );
+    $mailer->send_mail_template();
+    wp_send_json_success("success");   
+}
+add_action('wp_ajax_share_with_friend', 'forward_email_to_friend');
+add_action('wp_ajax_nopriv_share_with_friend', 'forward_email_to_friend');

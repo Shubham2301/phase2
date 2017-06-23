@@ -17,7 +17,7 @@
 						while ($loop->have_posts()) : $loop->the_post();
 				?>
 							<h1 class="page-title"><?php echo get_the_title();?></h1>
-							<p class="fade" id="rsvp-response-text"></p>
+							<p class="fade page-alerts" id="rsvp-response-text"></p>
 							<div class="row content text">
 								<div class="col-lg-12 text-center">
 									<div><?php echo wpautop(get_the_content());?></div>
@@ -57,6 +57,12 @@
 									<p class="row link text-center"> If not! then hurry up and become a guest user by:</p>
 									 <a class="btn btn-primary btn-lg" role="button" href="<?php echo $link_register_page;?>" target="_blank">REGISTERING HERE</a>
 								</div>
+								<div class="col-md-8 forward-button">
+									<?php get_template_part( 'templates/modal-forward_friend'); ?>
+									<label for="invite-friend">Invite a friend to this event</label>
+									<br>
+									<button type="button" class="btn btn-primary btn-md invite-friend" data-toggle="modal" data-target="#myModal">FORWARD</button>
+								</div>	
 							</div>
 				<?php
 						endwhile;
